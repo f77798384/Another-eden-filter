@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Another Eden Filter</title>
+    <!-- CSS Icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- CSS Custom -->
+    <link rel="stylesheet" href="./stylesheets/all.css">
+</head>
+
+<body>
+    <section class=" d-flex justify-content-center sticky-top">
+        <nav class="navbar navbar-expand navbar-light bg-white rounded-bottom-4 border border-3 border-top-0">
+            <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link " href="#" aria-current="page">更新歷程</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">角色<i class="bi bi-arrow-right"></i>個性</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">個性<i class="bi bi-arrow-right"></i>角色</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </section>
+
+    <main class="container mt-2">
+        <section>
+            <div class="row justify-content-center">
+                <div class="col-lg-10 position-relative">
+                    <table class="table align-middle text-center border">
+                        <thead>
+                            <tr>
+                                <th class="w-20 text-nowrap ">篩選類型</th>
+                                <th class="w-30">已選擇篩選條件</th>
+                                <th class="w-20 text-nowrap ">篩選類型</th>
+                                <th class="w-30">已選擇篩選條件</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#weaponModal" id="selector">
+                                        武器
+                                    </button>
+                                    <div class="modal modal fade" id="weaponModal" tabindex="-1"
+                                        aria-labelledby="weaponModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content border-0 position-relative bg-AE">
+                                                <img src="./images/bg.png" alt="" class=" position-absolute img-fluid translate-middle bgl top-50">
+                                                <img src="./images/bg.png" alt="" class=" position-absolute img-fluid translate-middle bgr top-50 start-100 ">
+                                                <div class="modal-header border-0 py-3 justify-content-center ">
+                                                    <h4 class="modal-title fw-bold " id="weaponModalLabel">
+                                                        武器篩選
+                                                    </h4>
+                                                    <a class="btn btn-primary position-absolute end-0 top-0" href="#"
+                                                        role="button" data-bs-dismiss="modal"
+                                                        aria-label="Close">Button</a>
+                                                </div>
+                                                <div class="modal-body py-3">
+                                                    <div class="row row-cols-2 row-cols-lg-4 g-4 justify-content-center">
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                杖
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                劍
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                刀
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                斧
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                槍
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                弓
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                拳
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                錘
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer border-0 justify-content-center ">
+                                                    <button type="button" class="btn btn-secondary px-5" id="reset">重置</button>
+                                                    <button type="button" class="btn btn-primary px-5" id="submit" data-type="weapon" data-bs-dismiss="modal">OK</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
+                                <td id="weapon">無篩選條件</td>
+                                <th>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#styleModal" id="selector">
+                                        頭銜
+                                    </button>
+                                    <div class="modal modal fade" id="styleModal" tabindex="-1"
+                                        aria-labelledby="styleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content border-0 position-relative bg-AE">
+                                                <img src="./images/bg.png" alt="" class=" position-absolute img-fluid translate-middle bgl top-50">
+                                                <img src="./images/bg.png" alt="" class=" position-absolute img-fluid translate-middle bgr top-50 start-100 ">
+                                                <div class="modal-header border-0 py-3 justify-content-center ">
+                                                    <h4 class="modal-title fw-bold " id="styleModalLabel">
+                                                        頭銜篩選
+                                                    </h4>
+                                                    <a class="btn btn-primary position-absolute end-0 top-0" href="#"
+                                                        role="button" data-bs-dismiss="modal"
+                                                        aria-label="Close">Button</a>
+                                                </div>
+                                                <div class="modal-body py-3">
+                                                    <div class="row row-cols-2 row-cols-lg-4 g-4 justify-content-center ">
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                NS
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                AS
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                ES
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer border-0 justify-content-center ">
+                                                    <button type="button" class="btn btn-secondary px-5" id="reset">重置</button>
+                                                    <button type="button" class="btn btn-primary px-5" id="submit" data-type="style" data-bs-dismiss="modal">OK</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
+                                <td id="style">無篩選條件</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#elementModal" id="selector">
+                                        屬性
+                                    </button>
+                                    <div class="modal modal fade" id="elementModal" tabindex="-1"
+                                        aria-labelledby="elementModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content border-0 position-relative bg-AE">
+                                                <img src="./images/bg.png" alt="" class=" position-absolute img-fluid translate-middle bgl top-50">
+                                                <img src="./images/bg.png" alt="" class=" position-absolute img-fluid translate-middle bgr top-50 start-100 ">
+                                                <div class="modal-header border-0 py-3 justify-content-center ">
+                                                    <h4 class="modal-title fw-bold " id="elementModalLabel">
+                                                        屬性篩選
+                                                    </h4>
+                                                    <a class="btn btn-primary position-absolute end-0 top-0" href="#"
+                                                        role="button" data-bs-dismiss="modal"
+                                                        aria-label="Close">Button</a>
+                                                </div>
+                                                <div class="modal-body py-3">
+                                                    <div class="row row-cols-2 row-cols-lg-4 g-4 justify-content-center">
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                地
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                水
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                火
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                風
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                雷
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                陰
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                晶
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                無
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer border-0 justify-content-center ">
+                                                    <button type="button" class="btn btn-secondary px-5" id="reset">重置</button>
+                                                    <button type="button" class="btn btn-primary px-5" id="submit" data-type="element" data-bs-dismiss="modal">OK</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
+                                <td id="element">無篩選條件</td>
+                                <th>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#LStypeModal" id="selector">
+                                        天冥
+                                    </button>
+                                    <div class="modal modal fade" id="LStypeModal" tabindex="-1"
+                                        aria-labelledby="LStypeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content border-0 position-relative bg-AE">
+                                                <img src="./images/bg.png" alt="" class=" position-absolute img-fluid translate-middle bgl top-50">
+                                                <img src="./images/bg.png" alt="" class=" position-absolute img-fluid translate-middle bgr top-50 start-100 ">
+                                                <div class="modal-header border-0 py-3 justify-content-center ">
+                                                    <h4 class="modal-title fw-bold " id="LStypeModalLabel">
+                                                        天冥篩選
+                                                    </h4>
+                                                    <a class="btn btn-primary position-absolute end-0 top-0" href="#"
+                                                        role="button" data-bs-dismiss="modal"
+                                                        aria-label="Close">Button</a>
+                                                </div>
+                                                <div class="modal-body py-3">
+                                                    <div class="row row-cols-2 row-cols-lg-4 g-4 justify-content-center ">
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                天
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a name="" id="option" class="btn btn-light border rounded-4 w-100 shadow-sm" href="#"
+                                                                role="button">
+                                                                冥
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer border-0 justify-content-center ">
+                                                    <button type="button" class="btn btn-secondary px-5" id="reset">重置</button>
+                                                    <button type="button" class="btn btn-primary px-5" id="submit" data-type="LStype" data-bs-dismiss="modal">OK</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
+                                <td id="LStype">無篩選條件</td>
+                            </tr>
+                            <tr>
+                                <th>個性</th>
+                                <td class="position-relative " colspan="3">
+                                    無篩選條件
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="row justify-content-center">
+                <div class="col-lg-10 p-0 p-lg-3">
+                    <table class="table table-striped table-hover text-center w-100 align-middle lh-lg border border-2 border-black" style="word-break:keep-all;" id="cha">
+                        <thead>
+                            <tr>
+                                <th class="w-20">角色名稱</th>
+                                <th class="w-10">武器</th>
+                                <th class="w-10">屬性</th>
+                                <th class="w-60">個性</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>菊之劍客</td>
+                                <td>刀</td>
+                                <td>地</td>
+                                <td>
+                                    <span>
+                                        東方
+                                    </span>
+                                    <span>
+                                        普賢一刀流
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>阿爾德</td>
+                                <td>劍</td>
+                                <td>火</td>
+                                <td>
+                                    <span>
+                                        主角
+                                        <span>
+                                            天之指引
+                                        </span>
+                                        <span>
+                                            採集
+                                        </span>
+                                        <span>
+                                            新夢想過激團
+                                        </span>
+                                        <span>
+                                            新時空極限流派
+                                        </span>
+                                        <span>
+                                            龍
+                                        </span>
+                                        <span>
+                                            巴路奧其
+                                        </span>
+                                        <span>
+                                            普賢一刀流
+                                        </span>
+                                        <span>
+                                            協奏聯技
+                                        </span>
+                                        <span>
+                                            阿卡迪亞
+                                        </span>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/all.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+.modal .bgl{
+    max-height: 100%;
+    clip-path: inset(0 0 0 50%);
+}
+.modal .bgr{
+    max-height: 100%;
+    clip-path: inset(0 50% 0 0);
+}
+// .modal-body a{
+//     background-image: url(../images/select.png);
+//     background-size: contain;
+//     background-repeat: no-repeat;
+//     background-position: center center;
+//     border-color: transparent !important;
+// }
+// .modal-body a.active{
+//     background-image: url(../images/5.png),url(../images/select.png);
+// }
