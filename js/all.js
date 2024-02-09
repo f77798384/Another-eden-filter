@@ -14,6 +14,7 @@ let cha = '';
         items['天冥'] = items['天冥'].split(',')
         items['武器類型'] = items['武器類型'].split(',')
     })
+    console.log(characterData)
     characterData.forEach(function(items){
         cha = '';
         ele = '';
@@ -46,6 +47,14 @@ let cha = '';
     });
     $('#cha tbody').html(display)
 })();
+//highlight
+function highlight(condition,data){
+    if(condition.text() == '無篩選條件'){
+        return true
+    }else{
+        return condition.text().split(', ').some(a => data.includes(a))
+    }
+}
 //監聽
 $('.modal-body #option').click(function (e) { 
     e.preventDefault();
@@ -83,22 +92,8 @@ function render(){
     })
     display = '';
     renderdata.forEach(function(items){
-        cha = '';
-        ele = '';
-        if(items['屬性'] != ''){
-            items['屬性'].forEach(function(items){
-                ele += `
-                <span>${items}</span>
-                `
-            })
-        }
-        if(items['個性'] != ''){
-            items['個性'].forEach(function(items){
-                cha += `
-                <span>${items}</span>
-                `
-            })
-        }
+        ele = components('none',items['屬性'])
+        cha = components('none',items['個性'])
         display +=`
         <tr>
             <td>${items['角色中文名稱']}</td>
@@ -122,7 +117,19 @@ function transform(condition,data){
         return condition.text().split(', ').some(a => data.includes(a))
     }
 }
-//
+//components
+function components(condition,data){
+    let content = '';
+    if(data != ''){
+        data.forEach(function(items){
+            content += `
+            <span>${items}</span>
+            `
+        })
+        return content
+    }
+}
+//highlight
 function highlight(condition,data){
     if(condition.text() == '無篩選條件'){
         return true
