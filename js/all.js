@@ -14,27 +14,29 @@ let cha = '';
         items['天冥'] = items['天冥'].split(',')
         items['武器類型'] = items['武器類型'].split(',')
     })
-    console.log(characterData)
+    Comparison()
     characterData.forEach(function(items){
-        cha = '';
-        ele = '';
-        if(items['屬性'] != ''){
-            items['屬性'].forEach(function(items){
-                ele += `
-                <span>${items}</span>
-                `
-            })
-        }
-        if(items['個性'] != ''){
-            items['個性'].forEach(function(items){
-                cha += `
-                <span>${items}</span>
-                `
-            })
-        }
+        // cha = '';
+        // ele = '';
+        // if(items['屬性'] != ''){
+        //     items['屬性'].forEach(function(items){
+        //         ele += `
+        //         <span>${items}</span>
+        //         `
+        //     })
+        // }
+        // if(items['個性'] != ''){
+        //     items['個性'].forEach(function(items){
+        //         cha += `
+        //         <span>${items}</span>
+        //         `
+        //     })
+        // }
+        ele = components($('#element'),items['屬性'])
+        cha = components($('#personality'),items['個性'])
         display +=`
         <tr>
-            <td>${items['角色中文名稱']}</td>
+            <td>${items['角色中文名稱']} ${items['頭銜']}</td>
             <td>${items['武器類型']}</td>
             <td>
                 ${ele}
@@ -47,14 +49,6 @@ let cha = '';
     });
     $('#cha tbody').html(display)
 })();
-//highlight
-function highlight(condition,data){
-    if(condition.text() == '無篩選條件'){
-        return true
-    }else{
-        return condition.text().split(', ').some(a => data.includes(a))
-    }
-}
 //監聽
 $('.modal-body #option').click(function (e) { 
     e.preventDefault();
@@ -92,11 +86,11 @@ function render(){
     })
     display = '';
     renderdata.forEach(function(items){
-        ele = components('none',items['屬性'])
-        cha = components('none',items['個性'])
+        ele = components($('#element'),items['屬性'])
+        cha = components($('#personality'),items['個性'])
         display +=`
         <tr>
-            <td>${items['角色中文名稱']}</td>
+            <td>${items['角色中文名稱']} ${items['頭銜']}</td>
             <td>${items['武器類型']}</td>
             <td>
                 ${ele}
@@ -107,6 +101,7 @@ function render(){
         </tr>
         `
     });
+    //<td ${highlight($('#weapon'),items['武器類型'])} >${items['武器類型']}</td>
     $('#cha tbody').html(display)
 }
 //條件篩選
@@ -123,7 +118,7 @@ function components(condition,data){
     if(data != ''){
         data.forEach(function(items){
             content += `
-            <span>${items}</span>
+            <span ${highlight(condition,items)} >${items}</span>
             `
         })
         return content
@@ -131,9 +126,69 @@ function components(condition,data){
 }
 //highlight
 function highlight(condition,data){
-    if(condition.text() == '無篩選條件'){
-        return true
+    //condition.text().split(', ').some(a => data.includes(a))
+    //condition.text().split(', ').includes(data)
+    if(condition.text().split(', ').some(a => data.includes(a))){
+        return ` class="highlight"`
     }else{
-        return condition.text().split(', ').some(a => data.includes(a))
+        return `class=""`
     }
 }
+//篩選不重複
+function Comparison(){
+    let copy = true;
+    characterData = characterData.filter((items,index,arr) => {
+        if(items['頭銜'] == "AS" ){
+            arr.forEach((a,i) => {
+                if(a['角色中文名稱'] == items['角色中文名稱'] && a['頭銜']=='NS'){
+                    let len = 0;
+                    items['個性'].forEach(b => {
+                        (a['個性'].find(c => c == b) ? len++ : '')
+                    })
+                    if(len == a['個性'].length && a['屬性'][0] == items['屬性'][0]){
+                        characterData[i]['頭銜'].push(items['頭銜'][0])
+                        characterData[i]['實裝時間']=items['實裝時間']
+                        characterData[i]['星數']=items['星數']
+                        return copy = false
+                    }else{
+                        return copy = true
+                    }
+                }
+            })
+        }
+        if(copy == true){
+            return true
+        }else{
+            copy = true
+            return false
+        }
+    })
+    console.log(characterData)
+}
+function Comparison1(){
+    characterData = characterData.filter((items,index,arr) => {
+        if(items['頭銜'] == "AS" ){
+            arr.forEach((a,i) => {
+                if(a['角色中文名稱'] == items['角色中文名稱'] && a['頭銜']=='NS'){
+                    let len = 0;
+                    items['個性'].forEach(b => {
+                        (a['個性'].find(c => c == b) ? len++ : '')
+                    })
+                    if(len == a['個性'].length && a['屬性'][0] == items['屬性'][0]){
+                        characterData[i]['頭銜'].push(items['頭銜'][0])
+                        characterData[i]['實裝時間']=items['實裝時間']
+                        characterData[i]['星數']=items['星數']
+                        return false
+                    }else{
+                        return true
+                    }
+                }
+            })
+        }else{
+            return true
+        }
+    })
+    console.log(characterData)
+}
+//<span class="highlight">${items}</span>
+//<span>${items}</span>
