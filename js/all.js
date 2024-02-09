@@ -8,7 +8,7 @@ let renderdata = [];
 let display = '';
 let cha = '';
 (async function(){
-    const response = await fetch('../data/data.csv');
+    const response = await fetch('./data/data.csv');
     const text = await response.text();
     characterData = Papa.parse(text,{header:true}).data;
     characterData.forEach(function(items){
