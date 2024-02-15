@@ -70,7 +70,7 @@ $('.modal-footer #submit').on('click',function (e) {
         str.push($(items).text().trim());
     })
     $(`#${$(e.target).data('type')}`).html(
-        (str == '' ? '無篩選條件' : str.join(', '));
+        (str == '' ? '無篩選條件' : str.join(', '))
     )
     $('#personalitySearch').val('');
     PersonalityList();
