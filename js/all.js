@@ -9,11 +9,11 @@ let partyPersonality = '';
     characterData = Papa.parse(text,{header:true,skipEmptyLines:true}).data;
     let personality = '';
     characterData.sort(function(a,b){
-        return Date.parse(b['實裝時間']) - Date.parse(a['實裝時間'])
+        return Date.parse(b['實裝時間']) - Date.parse(a['實裝時間']);
     })
     characterData.forEach(function(items){
         if(items['個性'] != ''){
-            personality +=`${items['個性']},`
+            personality +=`${items['個性']},`;
         }
         items['個性'] = items['個性'].split(',');
         items['頭銜'] = items['頭銜'].split(',');
@@ -21,10 +21,10 @@ let partyPersonality = '';
         items['天冥'] = items['天冥'].split(',');
         items['武器類型'] = items['武器類型'].split(',');
     })
-    originPersonality = Array.from(new Set(personality.split(','))).slice(0,-1)
-    PersonalityList()
-    Comparison()
-    datainitialization(characterData)
+    originPersonality = Array.from(new Set(personality.split(','))).slice(0,-1);
+    PersonalityList();
+    Comparison();
+    datainitialization(characterData);
 })();
 
 
@@ -32,7 +32,7 @@ let partyPersonality = '';
 $(' #selector').on('click',function(e){
     //紀錄modal
     e.preventDefault();
-    modal = $(e.target).siblings('.modal')
+    modal = $(e.target).siblings('.modal');
 })
 $('.modal-body').on('click','#option',function (e) { 
     //篩選項目觸發
@@ -42,9 +42,9 @@ $('.modal-body').on('click','#option',function (e) {
 $('.modal').on('hidden.bs.modal',function(e){
     //復原篩選項目
     let modaltype = `#${modal.find('#submit').data('type')}`;
-    let option = modal.find(' #option')
+    let option = modal.find(' #option');
     let filter_items = $('#filter-items').find(modaltype).text().split(', ');
-    modal.find('#reset').click()
+    modal.find('#reset').click();
     $.each(option,(index,items) => {
         filter_items.forEach(options =>{
             if(items.text.trim() == options){
@@ -59,7 +59,7 @@ $('.modal-footer #reset').on('click',function (e) {
     $(e.target).parentsUntil('.modal').find(' #option').removeClass('active');
     //重置個性搜尋
     if($(e.target).siblings().data('type') == 'personality'){
-        $('#resetSearch').click()
+        $('#resetSearch').click();
     }
 });
 $('.modal-footer #submit').on('click',function (e) { 
@@ -67,24 +67,24 @@ $('.modal-footer #submit').on('click',function (e) {
     e.preventDefault();
     let str = [];
     $(e.target).parentsUntil('.modal').find(' #option.active').each(function (index,items) {
-        str.push($(items).text().trim())
+        str.push($(items).text().trim());
     })
     $(`#${$(e.target).data('type')}`).html(
-        (str == '' ? '無篩選條件' : str.join(', '))
+        (str == '' ? '無篩選條件' : str.join(', '));
     )
-    $('#personalitySearch').val('')
-    PersonalityList()
-    render()
+    $('#personalitySearch').val('');
+    PersonalityList();
+    render();
 });
 $('#resetall').on('click',function (e) { 
     //全部重置
     e.preventDefault();
-    $(' #reset').click()
-    $(' #submit').click()
+    $(' #reset').click();
+    $(' #submit').click();
 });
 $('#personalitySearch').change(function(e){
     //搜尋個性
-    Psearch($(e.target).val())
+    Psearch($(e.target).val());
 })
 $('#resetSearch').click(function(e){
     //重置個性搜尋
@@ -99,7 +99,7 @@ function render(){
     $('#style').text() == '無篩選條件' && 
     $('#LStype').text() == '無篩選條件' && 
     $('#personality').text() == '無篩選條件'){
-        datainitialization(characterData)
+        datainitialization(characterData);
         return;
     }else{
         let renderdata = characterData.filter(items => (transform($('#element'),items['屬性']) &&
@@ -108,15 +108,15 @@ function render(){
         transform($('#style'),items['頭銜']) &&
         transform($('#personality'),items['個性'])
         ))
-        datainitialization(renderdata)
+        datainitialization(renderdata);
     }
 }
 //條件篩選
 function transform(condition,data){
     if(condition.text().trim() == '無篩選條件'){
-        return true
+        return true;
     }else{
-        return condition.text().split(', ').some(a => data.includes(a))
+        return condition.text().split(', ').some(a => data.includes(a));
     }
 }
 //components
@@ -126,17 +126,17 @@ function components(condition,data){
         data.forEach(function(items){
             content += `
             <span ${highlight(condition,items)} >${items}</span>
-            `
+            `;
         })
     }
-    return content
+    return content;
 }
 //highlight
 function highlight(condition,data){
     if(condition.text().split(', ').some(a => data.includes(a))){
-        return ` class="highlight"`
+        return ` class="highlight"`;
     }else{
-        return `class=""`
+        return `class=""`;
     }
 }
 //篩選不重複
@@ -148,24 +148,24 @@ function Comparison(){
                 if(a['角色中文名稱'] == items['角色中文名稱'] && a['頭銜']=='NS'){
                     let len = 0;
                     items['個性'].forEach(b => {
-                        (a['個性'].find(c => c == b) ? len++ : '')
+                        (a['個性'].find(c => c == b) ? len++ : '');
                     })
                     if(len == a['個性'].length && a['屬性'][0] == items['屬性'][0]){
-                        characterData[i]['頭銜'].push(items['頭銜'][0])
-                        characterData[i]['實裝時間']=items['實裝時間']
-                        characterData[i]['星數']=items['星數']
-                        return copy = false
+                        characterData[i]['頭銜'].push(items['頭銜'][0]);
+                        characterData[i]['實裝時間']=items['實裝時間'];
+                        characterData[i]['星數']=items['星數'];
+                        return copy = false;
                     }else{
-                        return copy = true
+                        return copy = true;
                     }
                 }
             })
         }
         if(copy == true){
-            return true
+            return true;
         }else{
-            copy = true
-            return false
+            copy = true;
+            return false;
         }
     })
 }
@@ -173,9 +173,9 @@ function Comparison(){
 function datainitialization(data){
     let display = '';
     data.forEach(function(items,index){
-        let style = components($('#style'),items['頭銜'])
-        let ele = components($('#element'),items['屬性'])
-        let cha = components($('#personality'),items['個性'])
+        let style = components($('#style'),items['頭銜']);
+        let ele = components($('#element'),items['屬性']);
+        let cha = components($('#personality'),items['個性']);
         display +=`
         <tr>
             <td>${items['角色中文名稱']}</td>
@@ -188,9 +188,9 @@ function datainitialization(data){
                 ${cha}
             </td>
         </tr>
-        `
+        `;
     });
-    $('#cha tbody').html(display)
+    $('#cha tbody').html(display);
 }
 //個性表單刷新
 function PersonalityList(condition){
@@ -205,7 +205,7 @@ function PersonalityList(condition){
                     ${items}
                 </a>
             </div>
-            `
+            `;
         }else if(condition == undefined){
             str += `
             <div class="col">
@@ -215,16 +215,16 @@ function PersonalityList(condition){
                     ${items}
                 </a>
             </div>
-            `
+            `;
         }
     })
-    $('#personalityModal .modal-body .row').html(str)
+    $('#personalityModal .modal-body .row').html(str);
 }
 //個性搜尋
 function Psearch(condition){
     $('#personalityModal .modal-body .row #option').each((index,items) => {
         if($(items).text().includes(condition) == false){
-            $(items).parent().addClass('d-none')
+            $(items).parent().addClass('d-none');
         }
     })
 }
