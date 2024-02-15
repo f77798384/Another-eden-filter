@@ -52,15 +52,15 @@ $utilities: map-merge(
     // scss-docs-start utils-overflow
     "overflow": (
       property: overflow,
-      values: auto hidden visible scroll,
+      values: auto hidden visible scroll initial,
     ),
     "overflow-x": (
       property: overflow-x,
-      values: auto hidden visible scroll,
+      values: auto hidden visible scroll initial,
     ),
     "overflow-y": (
       property: overflow-y,
-      values: auto hidden visible scroll,
+      values: auto hidden visible scroll initial,
     ),
     // scss-docs-end utils-overflow
     // scss-docs-start utils-display
@@ -252,7 +252,7 @@ $utilities: map-merge(
     "max-height": (
       property: max-height,
       class: mh,
-      values: (100: 100%)
+      values: (100: 100%,50:50%)
     ),
     "viewport-height": (
       property: height,

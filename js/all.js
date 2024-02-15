@@ -1,33 +1,49 @@
 let characterData = [];
-let renderdata = [];
-let str = [];
-let display = '';
-let ele = '';
-let cha = '';
-let style = '';
 let modal = '';
+let originPersonality = '';
+let partyPersonality = '';
 //資料載入
 (async function(){
     const response = await fetch('./data/data1.csv');
     const text = await response.text();
     characterData = Papa.parse(text,{header:true,skipEmptyLines:true}).data;
+    let personality = '';
     characterData.forEach(function(items){
-        items['個性'] = items['個性'].split(',')
-        items['頭銜'] = items['頭銜'].split(',')
-        items['屬性'] = items['屬性'].split(',')
-        items['天冥'] = items['天冥'].split(',')
-        items['武器類型'] = items['武器類型'].split(',')
+        if(items['個性'] != ''){
+            personality +=`${items['個性']},`
+        }
+        items['個性'] = items['個性'].split(',');
+        items['頭銜'] = items['頭銜'].split(',');
+        items['屬性'] = items['屬性'].split(',');
+        items['天冥'] = items['天冥'].split(',');
+        items['武器類型'] = items['武器類型'].split(',');
     })
+    originPersonality = Array.from(new Set(personality.split(','))).slice(0,-1)
+    let str = '';
+    originPersonality.forEach(items => {
+        str += `
+        <div class="col">
+            <a name="" id="option"
+                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                href="#" role="button">
+                ${items}
+            </a>
+        </div>
+        `
+    })
+    $('#personality .modal-body .row').html(str)
     Comparison()
     datainitialization(characterData)
 })();
+
+
 //監聽
-$(' #selector').click(function(e){
+$(' #selector').on('click',function(e){
     //紀錄modal
     e.preventDefault();
     modal = $(e.target).siblings('.modal')
 })
-$('.modal-body #option').click(function (e) { 
+$('.modal-body').on('click','#option',function (e) { 
     //篩選項目觸發
     e.preventDefault();
     $(e.target).toggleClass('active');
@@ -46,36 +62,37 @@ $('.modal').on('hidden.bs.modal',function(e){
         })
     })
 })
-$('.modal-footer #reset').click(function (e) { 
+$('.modal-footer #reset').on('click',function (e) { 
     //重置
     e.preventDefault();
     $(e.target).parentsUntil('.modal').find(' #option').removeClass('active');
 });
-$('.modal-footer #submit').click(function (e) { 
+$('.modal-footer #submit').on('click',function (e) { 
     //送出
     e.preventDefault();
-    str = [];
+    let str = [];
     $(e.target).parentsUntil('.modal').find(' #option.active').each(function (index,element) {
         str.push($(element).text().trim())
     })
     $(`#${$(e.target).data('type')}`).html(
         (str == '' ? '無篩選條件' : str.join(', '))
     )
-    render()
+    render(str)
 });
-$('#resetall').click(function (e) { 
+$('#resetall').on('click',function (e) { 
     //全部重置
     e.preventDefault();
     $(' #reset').click()
     $(' #submit').click()
 });
 //資料刷新
-function render(){
+function render(str){
     if (str == ''){
         datainitialization(characterData)
         return;
     }else{
-        renderdata = characterData.filter(function(items,index){
+
+        let renderdata = characterData.filter(function(items,index){
             if($('#weapon').text() != '無篩選條件' || $('#element').text() != '無篩選條件' || $('#style').text() != '無篩選條件' || $('#LStype').text() != '無篩選條件'){
                 return (
                     (transform($('#element'),items['屬性']) &&
@@ -86,7 +103,6 @@ function render(){
                 )
             }
         })
-        display = '';
         datainitialization(renderdata)
     }
 }
@@ -107,13 +123,11 @@ function components(condition,data){
             <span ${highlight(condition,items)} >${items}</span>
             `
         })
-        return content
     }
+    return content
 }
 //highlight
 function highlight(condition,data){
-    //condition.text().split(', ').some(a => data.includes(a))
-    //condition.text().split(', ').includes(data)
     if(condition.text().split(', ').some(a => data.includes(a))){
         return ` class="highlight"`
     }else{
@@ -149,15 +163,14 @@ function Comparison(){
             return false
         }
     })
-    console.log(characterData)
 }
 //資料初始化
 function datainitialization(DATA){
-    display = '';
-    DATA.forEach(function(items){
-        style = components($('#style'),items['頭銜'])
-        ele = components($('#element'),items['屬性'])
-        cha = components($('#personality'),items['個性'])
+    let display = '';
+    DATA.forEach(function(items,index){
+        let style = components($('#style'),items['頭銜'])
+        let ele = components($('#element'),items['屬性'])
+        let cha = components($('#personality'),items['個性'])
         display +=`
         <tr>
             <td>${items['角色中文名稱']}</td>
