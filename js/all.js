@@ -19,19 +19,20 @@ let partyPersonality = '';
         items['武器類型'] = items['武器類型'].split(',');
     })
     originPersonality = Array.from(new Set(personality.split(','))).slice(0,-1)
-    let str = '';
-    originPersonality.forEach(items => {
-        str += `
-        <div class="col">
-            <a name="" id="option"
-                class="btn btn-light border rounded-4 w-100 shadow-sm"
-                href="#" role="button">
-                ${items}
-            </a>
-        </div>
-        `
-    })
-    $('#personality .modal-body .row').html(str)
+    // let str = '';
+    // originPersonality.forEach(items => {
+    //     str += `
+    //     <div class="col">
+    //         <a name="" id="option"
+    //             class="btn btn-light border rounded-4 w-100 shadow-sm"
+    //             href="#" role="button">
+    //             ${items}
+    //         </a>
+    //     </div>
+    //     `
+    // })
+    // $('#personalityModal .modal-body .row').html(str)
+    PersonalityList()
     Comparison()
     datainitialization(characterData)
 })();
@@ -85,20 +86,23 @@ $('#resetall').on('click',function (e) {
     $(' #reset').click()
     $(' #submit').click()
 });
+$('#personalitySearch').change(function(e){
+    PersonalityList($(e.target).val())
+})
 //資料刷新
 function render(str){
     if (str == ''){
         datainitialization(characterData)
         return;
     }else{
-
         let renderdata = characterData.filter(function(items,index){
-            if($('#weapon').text() != '無篩選條件' || $('#element').text() != '無篩選條件' || $('#style').text() != '無篩選條件' || $('#LStype').text() != '無篩選條件'){
+            if($('#weapon').text() != '無篩選條件' || $('#element').text() != '無篩選條件' || $('#style').text() != '無篩選條件' || $('#LStype').text() != '無篩選條件' || $('#personality').text() != '無篩選條件'){
                 return (
                     (transform($('#element'),items['屬性']) &&
                     transform($('#weapon'),items['武器類型']) &&
                     transform($('#LStype'),items['天冥']) &&
-                    transform($('#style'),items['頭銜'])
+                    transform($('#style'),items['頭銜']) &&
+                    transform($('#personality'),items['個性'])
                     )
                 )
             }
@@ -186,4 +190,50 @@ function datainitialization(DATA){
         `
     });
     $('#cha tbody').html(display)
+}
+//個性表單刷新
+function PersonalityList(condition){
+    let str = '';
+    originPersonality.forEach(items => {
+        if(condition && items.includes(condition)){
+            str += `
+            <div class="col">
+                <a name="" id="option"
+                    class="btn btn-light border rounded-4 w-100 shadow-sm"
+                    href="#" role="button">
+                    ${items}
+                </a>
+            </div>
+            `
+        }else if(condition == undefined){
+            str += `
+            <div class="col">
+                <a name="" id="option"
+                    class="btn btn-light border rounded-4 w-100 shadow-sm"
+                    href="#" role="button">
+                    ${items}
+                </a>
+            </div>
+            `
+        }
+    })
+    $('#personalityModal .modal-body .row').html(str)
+}
+//個性搜尋
+function Psearch(input){
+    let str = '';
+    originPersonality.forEach(items => {
+        if(items.includes(input)){
+            str += `
+            <div class="col">
+                <a name="" id="option"
+                    class="btn btn-light border rounded-4 w-100 shadow-sm"
+                    href="#" role="button">
+                    ${items}
+                </a>
+            </div>
+            `
+        }
+    })
+    $('#personalityModal .modal-body .row').html(str)
 }

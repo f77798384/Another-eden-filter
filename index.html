@@ -352,10 +352,10 @@
                             <tr>
                                 <th>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#personality" id="selector">
+                                        data-bs-target="#personalityModal" id="selector">
                                         個性
                                     </button>
-                                    <div class="modal fade" id="personality" tabindex="-1"
+                                    <div class="modal fade" id="personalityModal" tabindex="-1"
                                         aria-labelledby="personalityLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered overflow-y-initial modal-custom">
                                             <div class="modal-content border-0 position-relative bg-AE z-1">
@@ -363,31 +363,24 @@
                                                     class=" position-absolute img-fluid translate-middle bgl z-n1 top-50">
                                                 <img src="./images/bg.png" alt=""
                                                     class=" position-absolute img-fluid translate-middle bgr z-n1 top-50 start-100 ">
-                                                <div class="modal-header border-0 py-3 justify-content-center ">
+                                                <div class="modal-header border-0 py-3 flex-column">
                                                     <h4 class="modal-title fw-bold " id="personalityLabel">
                                                         個性篩選
                                                     </h4>
+                                                    <div class="search-group">
+                                                        <input type="search" placeholder="Search" class="mt-2" id="personalitySearch">
+                                                        <a id="reset" class="align-self-center border mx-3 rounded-pill  fs-4 px-3" href="#"><i
+                                                            class="bi bi-trash-fill"></i></a>
+                                                    </div>
                                                     <a class="btn btn-primary position-absolute end-0 top-0" href="#"
                                                         role="button" data-bs-dismiss="modal" aria-label="Close"
                                                         id="close">Button</a>
                                                 </div>
                                                 <div class="modal-body py-3 overflow-auto" style="height:16rem">
+                                                    
                                                     <div
                                                         class="row row-cols-2 row-cols-lg-3 g-4 justify-content-center">
-                                                        <div class="col">
-                                                            <a name="" id="option"
-                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
-                                                                href="#" role="button">
-                                                                天
-                                                            </a>
-                                                        </div>
-                                                        <div class="col">
-                                                            <a name="" id="option"
-                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
-                                                                href="#" role="button">
-                                                                冥
-                                                            </a>
-                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer border-0 justify-content-center ">
@@ -400,7 +393,7 @@
                                         </div>
                                     </div>
                                 </th>
-                                <td class="position-relative " colspan="3" id="personality">
+                                <td colspan="3" id="personality">
                                     無篩選條件
                                 </td>
                             </tr>
