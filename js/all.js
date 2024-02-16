@@ -32,7 +32,7 @@ let partyPersonality = [];
     const text = await response.text();
     Papa.parse(text,{fields:false,skipEmptyLines:true}).data.forEach(items =>{
         if(items){
-            partyPersonality.push(items[0])
+            partyPersonality.push(items[0]);
         }
     })
 })();
@@ -106,9 +106,17 @@ $('#resetSearch').click(function(e){
 $('#Ptype').click(function(){
     $(this).toggleClass('active');
     if($(this).hasClass('active')){
+        $('#personalityModal #option.active').each((index,items) => {
+            if(partyPersonality.includes($(items).text().trim())){
+                return;
+            }else{
+                $(items).removeClass('active')
+            }
+        })
+        $(' #submit').click();
         PersonalityList(partyPersonality);
     }else{
-        PersonalityList()
+        PersonalityList();
     }
     render();
 })
@@ -128,7 +136,7 @@ function render(){
         transform($('#LStype'),items['天冥']) &&
         transform($('#style'),items['頭銜']) &&
         transform($('#personality'),items['個性'])
-        ))
+        ));
         datainitialization(renderdata);
     }
 }
@@ -180,7 +188,7 @@ function Comparison(){
                     let len = 0;
                     items['個性'].forEach(b => {
                         (a['個性'].find(c => c == b) ? len++ : '');
-                    })
+                    });
                     if(len == a['個性'].length && a['屬性'][0] == items['屬性'][0]){
                         characterData[i]['頭銜'].push(items['頭銜'][0]);
                         characterData[i]['實裝時間']=items['實裝時間'];
@@ -227,7 +235,7 @@ function PersonalityList(condition){
         if(condition && condition.includes(items)){
             str += `
             <div class="col">
-                <a name="" id="option"
+                <a id="option"
                     class="btn btn-light border rounded-4 w-100 shadow-sm"
                     href="#" role="button">
                     ${items}
@@ -237,7 +245,7 @@ function PersonalityList(condition){
         }else if(condition == undefined){
             str += `
             <div class="col">
-                <a name="" id="option"
+                <a id="option"
                     class="btn btn-light border rounded-4 w-100 shadow-sm"
                     href="#" role="button">
                     ${items}
@@ -250,9 +258,16 @@ function PersonalityList(condition){
 }
 //個性搜尋
 function Psearch(condition){
-    $('#personalityModal .modal-body .row #option').each((index,items) => {
-        if($(items).text().includes(condition) == false){
-            $(items).parent().addClass('d-none');
-        }
-    })
+    if(condition){
+        $('#personalityModal .modal-body .row #option').each((index,items) => {
+            if($(items).text().includes(condition) == false){
+                $(items).parent().addClass('d-none');
+            }
+        })
+        return;
+    }else{
+        $('#personalityModal .modal-body .row #option').each((index,items) => {
+            $(items).parent().removeClass('d-none')
+        })
+    }
 }

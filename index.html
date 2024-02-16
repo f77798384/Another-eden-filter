@@ -16,22 +16,22 @@
         <nav
             class="navbar navbar-expand navbar-light bg-white rounded-bottom-4 border border-3 border-top-0 border-secondary ">
             <div class="collapse navbar-collapse" id="collapsibleNavId">
-                <ul class="navbar-nav mt-2 mt-lg-0 text-nowrap ">
+                <ul class="navbar-nav mt-0 text-nowrap">
                     <li class="nav-item mx-1 ms-2">
-                        <a class="btn btn-outline-brown accordion fw-bold " href="#" aria-current="page">更新歷程</a>
+                        <a class="btn btn-outline-brown accordion fw-bold h-100 d-flex align-items-center" href="#" aria-current="page">更新歷程</a>
                     </li>
                     <li class="nav-item mx-1">
-                        <a class="btn btn-outline-brown fw-bold " href="#">
+                        <a class="btn btn-outline-brown fw-bold h-100 d-flex align-items-center" href="#">
                             角色<i class="bi bi-arrow-right"></i>個性
                         </a>
                     </li>
                     <li class="nav-item mx-1">
-                        <a class="btn btn-outline-brown active fw-bold " href="#">
+                        <a class="btn btn-outline-brown active fw-bold h-100 d-flex align-items-center" href="#">
                             個性<i class="bi bi-arrow-right"></i>角色
                         </a>
                     </li>
                     <li class="nav-item mx-1 me-2 align-self-center">
-                        <a id="resetall" class="btn btn-outline-danger py-0 fs-4" href="#">
+                        <a id="resetall" class="btn btn-outline-danger py-0 fs-4 pt-1 " href="#">
                             <i class="bi bi-trash-fill"></i></a>
                     </li>
                 </ul>
@@ -48,10 +48,18 @@
                     <table class="table align-middle text-center table-bordered table-striped table-light">
                         <thead class="table-dark">
                             <tr>
-                                <th class="w-20 text-nowrap py-2"><p class="m-0">篩選類型</p></th>
-                                <th class="w-30 text-nowrap py-2"><p class="m-0">已篩選條件</p></th>
-                                <th class="w-20 text-nowrap py-2"><p class="m-0">篩選類型</p></th>
-                                <th class="w-30 text-nowrap py-2"><p class="m-0">已篩選條件</p></th>
+                                <th class="w-20 text-nowrap py-2">
+                                    <p class="m-0">篩選類型</p>
+                                </th>
+                                <th class="w-30 text-nowrap py-2">
+                                    <p class="m-0">已篩選條件</p>
+                                </th>
+                                <th class="w-20 text-nowrap py-2">
+                                    <p class="m-0">篩選類型</p>
+                                </th>
+                                <th class="w-30 text-nowrap py-2">
+                                    <p class="m-0">已篩選條件</p>
+                                </th>
                             </tr>
                         </thead>
                         <tbody id="filter-items">
@@ -79,65 +87,65 @@
                                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body py-3">
-                                                    <div
-                                                        class="row row-cols-2 row-cols-lg-4 g-4 justify-content-center">
-                                                        <div class="col">
+                                                    <ul
+                                                        class="row row-cols-2 row-cols-lg-4 g-4 justify-content-center list-unstyled ">
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 杖
                                                             </a>
-                                                        </div>
-                                                        <div class="col">
+                                                        </li>
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 劍
                                                             </a>
-                                                        </div>
-                                                        <div class="col">
+                                                        </li>
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 刀
                                                             </a>
-                                                        </div>
-                                                        <div class="col">
+                                                        </li>
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 斧
                                                             </a>
-                                                        </div>
-                                                        <div class="col">
+                                                        </li>
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 槍
                                                             </a>
-                                                        </div>
-                                                        <div class="col">
+                                                        </li>
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 弓
                                                             </a>
-                                                        </div>
-                                                        <div class="col">
+                                                        </li>
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 拳
                                                             </a>
-                                                        </div>
-                                                        <div class="col">
+                                                        </li>
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 錘
                                                             </a>
-                                                        </div>
-                                                    </div>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                                 <div class="modal-footer border-0 justify-content-center ">
                                                     <button type="button" class="btn btn-secondary px-5"
@@ -383,12 +391,15 @@
                                                     <h4 class="modal-title fw-bold " id="personalityLabel">
                                                         個性篩選
                                                     </h4>
-                                                    <div class="search-group">
-                                                        <input type="search" placeholder="Search" class="mt-2"
-                                                            id="personalitySearch">
-                                                        <a id="resetSearch"
+                                                    <div class="search-group d-flex">
+                                                        <input type="search" placeholder="Search" id="personalitySearch"
+                                                            class="ps-2">
+                                                        <a id="resetSearch" class="btn btn-outline-danger py-0 fs-4 mx-3 pt-1"
+                                                            href="#">
+                                                            <i class="bi bi-trash-fill"></i></a>
+                                                        <!-- <a id="resetSearch"
                                                             class="align-self-center border mx-3 rounded-pill  fs-4 px-3"
-                                                            href="#"><i class="bi bi-trash-fill"></i></a>
+                                                            href="#"><i class="bi bi-trash-fill"></i></a> -->
                                                     </div>
                                                     <button type="button"
                                                         class="btn-close position-absolute end-0 me-3 p-2"
