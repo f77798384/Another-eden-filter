@@ -1,16 +1,16 @@
 let characterData = [];
 let modal = '';
-let originPersonality = '';
-let partyPersonality = '';
+let originPersonality = [];
+let partyPersonality = [];
 //資料載入
 (async function(){
-    const response = await fetch('./data/data1.csv');
+    const response = await fetch('./data/data.csv');
     const text = await response.text();
     characterData = Papa.parse(text,{header:true,skipEmptyLines:true}).data;
-    let personality = '';
     characterData.sort(function(a,b){
         return Date.parse(b['實裝時間']) - Date.parse(a['實裝時間']);
     })
+    let personality = '';
     characterData.forEach(function(items){
         if(items['個性'] != ''){
             personality +=`${items['個性']},`;
@@ -26,6 +26,17 @@ let partyPersonality = '';
     Comparison();
     datainitialization(characterData);
 })();
+
+(async function(){
+    const response = await fetch('./data/Ptype.csv');
+    const text = await response.text();
+    Papa.parse(text,{fields:false,skipEmptyLines:true}).data.forEach(items =>{
+        if(items){
+            partyPersonality.push(items[0])
+        }
+    })
+})();
+
 
 
 //監聽
@@ -92,6 +103,16 @@ $('#resetSearch').click(function(e){
     $(e.target).parentsUntil('.modal').find(' #option').parent().removeClass('d-none');
     $('#personalitySearch').val('');
 })
+$('#Ptype').click(function(){
+    $(this).toggleClass('active');
+    if($(this).hasClass('active')){
+        PersonalityList(partyPersonality);
+    }else{
+        PersonalityList()
+    }
+    render();
+})
+
 //資料刷新
 function render(){
     if ($('#weapon').text() == '無篩選條件' && 
@@ -124,9 +145,19 @@ function components(condition,data){
     let content = '';
     if(data != ''){
         data.forEach(function(items){
-            content += `
-            <span ${highlight(condition,items)} >${items}</span>
-            `;
+            if($('#Ptype').hasClass('active')){
+                if(partyPersonality.includes(items)){
+                    content += `
+                    <span ${highlight(condition,items)} >${items}</span>
+                    `;
+                    return
+                }
+            }else{
+                content += `
+                <span ${highlight(condition,items)} >${items}</span>
+                `;
+                return
+            }
         })
     }
     return content;
@@ -173,19 +204,16 @@ function Comparison(){
 function datainitialization(data){
     let display = '';
     data.forEach(function(items,index){
-        let style = components($('#style'),items['頭銜']);
-        let ele = components($('#element'),items['屬性']);
-        let cha = components($('#personality'),items['個性']);
         display +=`
         <tr>
             <td>${items['角色中文名稱']}</td>
-            <td>${style}</td>
-            <td>${items['武器類型']}</td>
+            <td>${components($('#style'),items['頭銜'])}</td>
+            <td>${components($('#personality'),items['武器類型'])}</td>
             <td>
-                ${ele}
+                ${components($('#element'),items['屬性'])}
             </td>
             <td>
-                ${cha}
+                ${components($('#personality'),items['個性'])}
             </td>
         </tr>
         `;
@@ -196,7 +224,7 @@ function datainitialization(data){
 function PersonalityList(condition){
     let str = '';
     originPersonality.forEach(items => {
-        if(condition && items.includes(condition)){
+        if(condition && condition.includes(items)){
             str += `
             <div class="col">
                 <a name="" id="option"
