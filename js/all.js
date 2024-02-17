@@ -117,7 +117,6 @@ $('#resetSearch').click(function(e){
 })
 $('#Ptype').click(function(){
     //P化清單
-    e.preventDefault();
     let tab = $('.nav-item .active').attr('id');
     $(this).toggleClass('active');
     if($(this).hasClass('active')){
@@ -142,7 +141,6 @@ $('#Ptype').click(function(){
 })
 $('#r-Ptype').click(function(){
     //P化清單
-    e.preventDefault();
     $(this).toggleClass('active');
     if($(this).hasClass('active')){
         rolePersonality(partyPersonality);
