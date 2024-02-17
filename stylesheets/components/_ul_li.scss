@@ -3,8 +3,9 @@
     padding-left: 0 !important;
 }
 .update ul{
-    margin: 0 !important;
+    margin:0 0 0 1rem !important;
     & li{
         text-align: start !important;
+        list-style-type: decimal;
     }
 }

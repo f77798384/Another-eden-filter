@@ -13004,8 +13004,9 @@ td span {
 }
 
 .update ul {
-  margin: 0 !important;
+  margin: 0 0 0 1rem !important;
 }
 .update ul li {
   text-align: start !important;
+  list-style-type: decimal;
 }/*# sourceMappingURL=all.css.map */

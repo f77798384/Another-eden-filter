@@ -89,7 +89,6 @@ $('.modal-footer #submit').on('click',function (e) {
     let tab = $('.nav-item .active').attr('id');
     switch(tab){
         case 'ctr':
-            PersonalityList();
             render();
             break;
         case 'rtr':
@@ -120,22 +119,15 @@ $('#Ptype').click(function(){
     let tab = $('.nav-item .active').attr('id');
     $(this).toggleClass('active');
     if($(this).hasClass('active')){
-        // $('#personalityModal #option').each((index,items) => {
-        //     if(partyPersonality.includes($(items).text().trim()) == false){
-        //         $(items).removeClass('active')
-        //         $(items).parent().addClass('d-none')
-        //     }
-        // })
-        $('#personalityModal #option.active').each((index,items) => {
+        $('#personalityModal #option').each((index,items) => {
             if(partyPersonality.includes($(items).text().trim()) == false){
-                $(items).removeClass('active');
+                $(items).removeClass('active').parent().addClass('d-none');
             }
         })
         $(`.${tab} #submit`).click();
-        PersonalityList(partyPersonality);
         return;
     }else{
-        PersonalityList();
+        $('#personalityModal #option').parent().removeClass('d-none')
     }
     render();
 })
