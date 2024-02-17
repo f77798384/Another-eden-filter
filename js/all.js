@@ -84,22 +84,22 @@ $('.modal-footer #submit').on('click',function (e) {
     })
     $(`#${$(e.target).data('type')}`).html(
         (display == '' ? '無篩選條件' : display.join(', '))
-    )
+    );
     $('#personalitySearch').val('');
-    let tab = $('.nav-item .active').attr('id')
+    let tab = $('.nav-item .active').attr('id');
     switch(tab){
         case 'ctr':
             PersonalityList();
             render();
             break;
         case 'rtr':
-            // roledataList();
             render();
             break;
     }
 });
 $('#resetall').on('click',function (e) { 
     //全部重置
+    e.preventDefault();
     let tab = $('.nav-item .active').attr('id');
     $(`.${tab} #reset`).click();
     $(`.${tab} #submit`).click();
@@ -117,17 +117,24 @@ $('#resetSearch').click(function(e){
 })
 $('#Ptype').click(function(){
     //P化清單
+    e.preventDefault();
+    let tab = $('.nav-item .active').attr('id');
     $(this).toggleClass('active');
     if($(this).hasClass('active')){
+        // $('#personalityModal #option').each((index,items) => {
+        //     if(partyPersonality.includes($(items).text().trim()) == false){
+        //         $(items).removeClass('active')
+        //         $(items).parent().addClass('d-none')
+        //     }
+        // })
         $('#personalityModal #option.active').each((index,items) => {
-            if(partyPersonality.includes($(items).text().trim())){
-                return;
-            }else{
-                $(items).removeClass('active')
+            if(partyPersonality.includes($(items).text().trim()) == false){
+                $(items).removeClass('active');
             }
         })
-        $(' #submit').click();
+        $(`.${tab} #submit`).click();
         PersonalityList(partyPersonality);
+        return;
     }else{
         PersonalityList();
     }
@@ -135,6 +142,7 @@ $('#Ptype').click(function(){
 })
 $('#r-Ptype').click(function(){
     //P化清單
+    e.preventDefault();
     $(this).toggleClass('active');
     if($(this).hasClass('active')){
         rolePersonality(partyPersonality);
@@ -156,6 +164,7 @@ $('#roledataList').change(function(e){
 })
 $('#resetrolesearch').click(function(e){
     //rtr重置
+    e.preventDefault();
     $('#roledataList').val('');
     $('#rolepersonality').html('');
     $('#r-cha tbody').html('');
@@ -163,13 +172,14 @@ $('#resetrolesearch').click(function(e){
 })
 $('.nav-item a').click(function(e){
     //tab switch
+    e.preventDefault();
     let tab = $(this).attr('id');
     if($(this).hasClass('active')||tab =='resetall'){
         return;
     }else{
-        $(this).addClass('active').parent().siblings().children('a').removeClass('active')
-        $('main section').addClass('d-none')
-        $(`.${tab}`).removeClass('d-none')
+        $(this).addClass('active').parent().siblings().children('a').removeClass('active');
+        $('main section').addClass('d-none');
+        $(`.${tab}`).removeClass('d-none');
         return;
     }
 })
@@ -188,7 +198,6 @@ function render(){
     $((tab == 'rtr' ? '#r-LStype' : '#LStype')
     ).text() == '無篩選條件' && 
     (tab == 'rtr' ? true : $('#personality').text() == '無篩選條件')){
-
     }else{
         renderdata = characterData.filter(items => 
         (transform($((tab == 'rtr' ? '#r-element' : '#element')
@@ -204,7 +213,7 @@ function render(){
     }
     switch (tab){
         case 'rtr':
-            roledataList((renderdata ? renderdata:characterData))
+            roledataList((renderdata ? renderdata:characterData));
             break;
         case 'ctr':
             (renderdata ? datainitialization(renderdata):datainitialization(characterData));
@@ -225,28 +234,46 @@ function transform(condition,data){
 }
 //components
 function components(condition,data){
+    let tab = $('.nav-item .active').attr('id');
     let content = '';
     if(data != ''){
         data.forEach(function(items){
-            if($('#Ptype').hasClass('active')){
-                if(partyPersonality.includes(items)){
+            switch (tab) {
+                case 'rtr':
+                    if($('#r-Ptype').hasClass('active')){
+                        if(partyPersonality.includes(items)){
+                            content += `
+                            <span ${highlight(condition,items)} >${items}</span>
+                            `;
+                            return
+                        }
+                    }else{
+                        content += `
+                        <span ${highlight(condition,items)} >${items}</span>
+                        `;
+                        return
+                    }
+                    break;
+                case 'ctr':
+                    if($('#Ptype').hasClass('active')){
+                        if(partyPersonality.includes(items)){
+                            content += `
+                            <span ${highlight(condition,items)} >${items}</span>
+                            `;
+                            return;
+                        }
+                    }else{
+                        content += `
+                        <span ${highlight(condition,items)} >${items}</span>
+                        `;
+                        return;
+                    }
+                    break;
+                default:
                     content += `
-                    <span ${highlight(condition,items)} >${items}</span>
-                    `;
-                    return
-                }
-            }else if($('#r-Ptype').hasClass('active')){
-                if(partyPersonality.includes(items)){
-                    content += `
-                    <span ${highlight(condition,items)} >${items}</span>
-                    `;
-                    return
-                }
-            }else{
-                content += `
-                <span ${highlight(condition,items)} >${items}</span>
-                `;
-                return
+                        <span ${highlight(condition,items)} >${items}</span>
+                        `;
+                    break;
             }
         })
     }
@@ -375,12 +402,12 @@ function Psearch(condition){
             if($(items).text().includes(condition) == false){
                 $(items).parent().addClass('d-none');
             }
-        })
+        });
         return;
     }else{
         $('#personalityModal .modal-body .row #option').each((index,items) => {
             $(items).parent().removeClass('d-none')
-        })
+        });
     }
 }
 //角色名單刷新
@@ -426,7 +453,7 @@ function rolePersonality(condition){
             }
         })
     }else{
-        return
+        return;
     }
     rtrList(arr,role);
     $('#rolepersonality').html(display);
@@ -439,7 +466,7 @@ function rtrList(arr,role){
             items['屬性'].some(a => arr.includes(a)) ||
             items['武器類型'].some(a => arr.includes(a)) ||
             items['個性'].some(a => arr.includes(a))
-        )
+        );
     })
     renderdata.forEach(function(items,index){
         display +=`
