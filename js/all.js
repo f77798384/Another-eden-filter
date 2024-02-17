@@ -114,7 +114,18 @@ $('#personalitySearch').change(function(e){
 $('#resetSearch').click(function(e){
     //重置個性搜尋
     e.preventDefault();
-    $(e.target).parentsUntil('.modal').find(' #option').parent().removeClass('d-none');
+    let tab = $('.nav-item .active').attr('id');
+    if($(Ptype).hasClass('active')){
+        $('#personalityModal #option').each((index,items) => {
+            if(partyPersonality.includes($(items).text().trim()) == false){
+                $(items).removeClass('active').parent().addClass('d-none');
+            }
+        })
+        //$(`.${tab} #submit`).click();
+        return;
+    }else{
+        $('#personalityModal #option').parent().removeClass('d-none');
+    }
     $('#personalitySearch').val('');
     
 })
