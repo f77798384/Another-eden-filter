@@ -102,6 +102,10 @@ $('#resetall').on('click',function (e) {
     let tab = $('.nav-item .active').attr('id');
     $(`.${tab} #reset`).click();
     $(`.${tab} #submit`).click();
+    if(tab == 'rtr'){
+        $('#r-cha tbody').html('');
+        $('#resetrolesearch').click();
+    }
 });
 $('#personalitySearch').change(function(e){
     //搜尋個性
@@ -127,7 +131,7 @@ $('#Ptype').click(function(){
         $(`.${tab} #submit`).click();
         return;
     }else{
-        $('#personalityModal #option').parent().removeClass('d-none')
+        $('#personalityModal #option').parent().removeClass('d-none');
     }
     render();
 })
