@@ -12996,4 +12996,16 @@ td span {
 .highlight {
   border-color: rgb(0, 0, 0);
   background-color: rgb(255, 255, 0);
+}
+
+.container ul {
+  list-style: none !important;
+  padding-left: 0 !important;
+}
+
+.update ul {
+  margin: 0 !important;
+}
+.update ul li {
+  text-align: start !important;
 }/*# sourceMappingURL=all.css.map */

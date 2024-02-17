@@ -1,0 +1,10 @@
+.container ul{
+    list-style: none !important;
+    padding-left: 0 !important;
+}
+.update ul{
+    margin: 0 !important;
+    & li{
+        text-align: start !important;
+    }
+}

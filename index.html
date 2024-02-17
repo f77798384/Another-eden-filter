@@ -12,21 +12,23 @@
 </head>
 
 <body>
+
     <section class=" d-flex justify-content-center sticky-top">
         <nav
             class="navbar navbar-expand navbar-light bg-white rounded-bottom-4 border border-3 border-top-0 border-secondary ">
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav mt-0 text-nowrap">
                     <li class="nav-item mx-1 ms-2">
-                        <a class="btn btn-outline-brown accordion fw-bold h-100 d-flex align-items-center" href="#" aria-current="page">更新歷程</a>
+                        <a class="btn btn-outline-brown fw-bold h-100 d-flex align-items-center active" href="#"
+                            id="update">更新歷程</a>
                     </li>
                     <li class="nav-item mx-1">
-                        <a class="btn btn-outline-brown fw-bold h-100 d-flex align-items-center" href="#">
+                        <a class="btn btn-outline-brown fw-bold h-100 d-flex align-items-center " href="#" id="rtr">
                             角色<i class="bi bi-arrow-right"></i>個性
                         </a>
                     </li>
                     <li class="nav-item mx-1">
-                        <a class="btn btn-outline-brown active fw-bold h-100 d-flex align-items-center" href="#">
+                        <a class="btn btn-outline-brown fw-bold h-100 d-flex align-items-center " href="#" id="ctr">
                             個性<i class="bi bi-arrow-right"></i>角色
                         </a>
                     </li>
@@ -42,9 +44,417 @@
     </section>
 
     <main class="container mt-2">
-        <section>
+        <section class="update">
+            <div class="row justify-content-center mx-0">
+                <div class="col-10 p-0 p-lg-3">
+                    <table class="table align-middle text-center table-bordered table-striped table-light">
+                        <thead class="table-dark">
+                            <tr>
+                                <th class="w-20 text-nowrap py-2">日期</th>
+                                <th class="w-30 text-nowrap py-2">修正類型</th>
+                                <th class="w-50 text-nowrap py-2">詳細內容</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="2">2024/02/17</td>
+                                <td>版本更新</td>
+                                <td>
+                                    <ul>
+                                        <li>Beta測試版本發布</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>預計更新事項</td>
+                                <td>
+                                    <ul>
+                                        <li>1.特殊方式取得之個性標示</li>
+                                        <li>2.Picker Box</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="rtr d-none">
             <div class="row justify-content-center mx-0">
                 <div class="col-lg-10 p-0 p-lg-3 position-relative">
+                    <table class="table align-middle text-center table-bordered table-striped table-light">
+                        <thead class="table-dark">
+                            <tr>
+                                <th class="w-20 text-nowrap py-2">
+                                    <p class="m-0">篩選類型</p>
+                                </th>
+                                <th class="w-30 text-nowrap py-2">
+                                    <p class="m-0">已篩選條件</p>
+                                </th>
+                                <th class="w-20 text-nowrap py-2">
+                                    <p class="m-0">篩選類型</p>
+                                </th>
+                                <th class="w-30 text-nowrap py-2">
+                                    <p class="m-0">已篩選條件</p>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="r-filter-items">
+                            <tr>
+                                <th>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#r-weaponModal" id="selector">
+                                        武器
+                                    </button>
+                                    <div class="modal fade" id="r-weaponModal" tabindex="-1"
+                                        aria-labelledby="r-weaponModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content border-0 position-relative bg-AE z-1">
+                                                <img src="./images/bg.png" alt=""
+                                                    class=" position-absolute img-fluid translate-middle bgl z-n1 top-50">
+                                                <img src="./images/bg.png" alt=""
+                                                    class=" position-absolute img-fluid translate-middle bgr z-n1 top-50 start-100 ">
+                                                <div
+                                                    class="modal-header border-0 py-3 position-relative justify-content-center  ">
+                                                    <h4 class="modal-title fw-bold " id="r-weaponModalLabel">
+                                                        武器篩選
+                                                    </h4>
+                                                    <button type="button"
+                                                        class="btn-close position-absolute end-0 me-3 p-2"
+                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body py-3">
+                                                    <ul
+                                                        class="row row-cols-2 row-cols-lg-4 g-4 justify-content-center">
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                杖
+                                                            </a>
+                                                        </li>
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                劍
+                                                            </a>
+                                                        </li>
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                刀
+                                                            </a>
+                                                        </li>
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                斧
+                                                            </a>
+                                                        </li>
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                槍
+                                                            </a>
+                                                        </li>
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                弓
+                                                            </a>
+                                                        </li>
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                拳
+                                                            </a>
+                                                        </li>
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                錘
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer border-0 justify-content-center ">
+                                                    <button type="button" class="btn btn-secondary px-5"
+                                                        id="reset">重置</button>
+                                                    <button type="button" class="btn btn-primary px-5" id="submit"
+                                                        data-type="r-weapon" data-bs-dismiss="modal">OK</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
+                                <td id="r-weapon">無篩選條件</td>
+                                <th>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#r-styleModal" id="selector">
+                                        頭銜
+                                    </button>
+                                    <div class="modal fade" id="r-styleModal" tabindex="-1"
+                                        aria-labelledby="r-styleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content border-0 position-relative bg-AE z-1">
+                                                <img src="./images/bg.png" alt=""
+                                                    class=" position-absolute img-fluid translate-middle bgl z-n1 top-50">
+                                                <img src="./images/bg.png" alt=""
+                                                    class=" position-absolute img-fluid translate-middle bgr z-n1 top-50 start-100 ">
+                                                <div class="modal-header border-0 py-3 justify-content-center ">
+                                                    <h4 class="modal-title fw-bold " id="r-styleModalLabel">
+                                                        頭銜篩選
+                                                    </h4>
+                                                    <button type="button"
+                                                        class="btn-close position-absolute end-0 me-3 p-2"
+                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body py-3">
+                                                    <ul
+                                                        class="row row-cols-2 row-cols-lg-4 g-4 justify-content-center ">
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                NS
+                                                            </a>
+                                                        </li>
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                AS
+                                                            </a>
+                                                        </li>
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                ES
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer border-0 justify-content-center ">
+                                                    <button type="button" class="btn btn-secondary px-5"
+                                                        id="reset">重置</button>
+                                                    <button type="button" class="btn btn-primary px-5" id="submit"
+                                                        data-type="r-style" data-bs-dismiss="modal">OK</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
+                                <td id="r-style">無篩選條件</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#r-elementModal" id="selector">
+                                        屬性
+                                    </button>
+                                    <div class="modal fade" id="r-elementModal" tabindex="-1"
+                                        aria-labelledby="r-elementModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content border-0 position-relative bg-AE z-1">
+                                                <img src="./images/bg.png" alt=""
+                                                    class=" position-absolute img-fluid translate-middle bgl z-n1 top-50">
+                                                <img src="./images/bg.png" alt=""
+                                                    class=" position-absolute img-fluid translate-middle bgr z-n1 top-50 start-100 ">
+                                                <div class="modal-header border-0 py-3 justify-content-center ">
+                                                    <h4 class="modal-title fw-bold " id="r-elementModalLabel">
+                                                        屬性篩選
+                                                    </h4>
+                                                    <button type="button"
+                                                        class="btn-close position-absolute end-0 me-3 p-2"
+                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body py-3">
+                                                    <ul
+                                                        class="row row-cols-2 row-cols-lg-4 g-4 justify-content-center">
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                地
+                                                            </a>
+                                                        </li>
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                水
+                                                            </a>
+                                                        </li>
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                火
+                                                            </a>
+                                                        </li>
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                風
+                                                            </a>
+                                                        </li>
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                雷
+                                                            </a>
+                                                        </li>
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                陰
+                                                            </a>
+                                                        </li>
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                晶
+                                                            </a>
+                                                        </li>
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                無
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer border-0 justify-content-center ">
+                                                    <button type="button" class="btn btn-secondary px-5"
+                                                        id="reset">重置</button>
+                                                    <button type="button" class="btn btn-primary px-5" id="submit"
+                                                        data-type="r-element" data-bs-dismiss="modal">OK</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
+                                <td id="r-element">無篩選條件</td>
+                                <th>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#r-LStypeModal" id="selector">
+                                        天冥
+                                    </button>
+                                    <div class="modal fade" id="r-LStypeModal" tabindex="-1"
+                                        aria-labelledby="r-LStypeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content border-0 position-relative bg-AE z-1">
+                                                <img src="./images/bg.png" alt=""
+                                                    class=" position-absolute img-fluid translate-middle bgl z-n1 top-50">
+                                                <img src="./images/bg.png" alt=""
+                                                    class=" position-absolute img-fluid translate-middle bgr z-n1 top-50 start-100 ">
+                                                <div class="modal-header border-0 py-3 justify-content-center ">
+                                                    <h4 class="modal-title fw-bold " id="r-LStypeModalLabel">
+                                                        天冥篩選
+                                                    </h4>
+                                                    <button type="button"
+                                                        class="btn-close position-absolute end-0 me-3 p-2"
+                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body py-3">
+                                                    <ul
+                                                        class="row row-cols-2 row-cols-lg-4 g-4 justify-content-center ">
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                天
+                                                            </a>
+                                                        </li>
+                                                        <li class="col">
+                                                            <a name="" id="option"
+                                                                class="btn btn-light border rounded-4 w-100 shadow-sm"
+                                                                href="#" role="button">
+                                                                冥
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer border-0 justify-content-center ">
+                                                    <button type="button" class="btn btn-secondary px-5"
+                                                        id="reset">重置</button>
+                                                    <button type="button" class="btn btn-primary px-5" id="submit"
+                                                        data-type="r-LStype" data-bs-dismiss="modal">OK</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
+                                <td id="r-LStype">無篩選條件</td>
+                            </tr>
+                            <tr rowspan="2">
+                                <th colspan="2" class="table-dark py-2">角色名單</th>
+                                <th colspan="2" class="table-dark py-2">
+                                    <p class="mb-2">個性</p>
+                                    <div class="border d-inline p-1 rounded align-items-center">
+                                        <label for="r-Ptype">是否只顯示P化靈晶</label>
+                                        <input type="checkbox" id="r-Ptype" class="form-check-input">
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="d-flex">
+                                        <input class="form-control ms-1" list="datalistOptions" id="roledataList"
+                                            placeholder="請選擇角色">
+                                        <datalist id="datalistOptions">
+                                        </datalist>
+                                        <a id="resetrolesearch" class="btn btn-outline-danger py-0 fs-4 pt-1 ms-3 me-1"
+                                            href="#">
+                                            <i class="bi bi-trash-fill"></i></a>
+                                    </div>
+                                </td>
+                                <td colspan="2" id="rolepersonality" style="word-break:keep-all;" class="lh-lg">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mx-0">
+                <div class="col-lg-10 p-0 p-lg-3">
+                    <table
+                        class="table table-striped table-hover text-center w-100 align-middle lh-lg border border-2 border-black table-light"
+                        style="word-break:keep-all;" id="r-cha">
+                        <thead class="table-dark">
+                            <tr>
+                                <th class="w-15">角色名稱</th>
+                                <th class="w-10">頭銜</th>
+                                <th class="w-10">武器</th>
+                                <th class="w-10">屬性</th>
+                                <th class="w-50">個性</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="ctr d-none">
+            <div class="row justify-content-center mx-0">
+                <div class="col-lg-10 p-0 p-lg-3">
                     <table class="table align-middle text-center table-bordered table-striped table-light">
                         <thead class="table-dark">
                             <tr>
@@ -88,7 +498,7 @@
                                                 </div>
                                                 <div class="modal-body py-3">
                                                     <ul
-                                                        class="row row-cols-2 row-cols-lg-4 g-4 justify-content-center list-unstyled ">
+                                                        class="row row-cols-2 row-cols-lg-4 g-4 justify-content-center">
                                                         <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
@@ -180,30 +590,30 @@
                                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body py-3">
-                                                    <div
+                                                    <ul
                                                         class="row row-cols-2 row-cols-lg-4 g-4 justify-content-center ">
-                                                        <div class="col">
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 NS
                                                             </a>
-                                                        </div>
-                                                        <div class="col">
+                                                        </li>
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 AS
                                                             </a>
-                                                        </div>
-                                                        <div class="col">
+                                                        </li>
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 ES
                                                             </a>
-                                                        </div>
-                                                    </div>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                                 <div class="modal-footer border-0 justify-content-center ">
                                                     <button type="button" class="btn btn-secondary px-5"
@@ -240,65 +650,65 @@
                                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body py-3">
-                                                    <div
+                                                    <ul
                                                         class="row row-cols-2 row-cols-lg-4 g-4 justify-content-center">
-                                                        <div class="col">
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 地
                                                             </a>
-                                                        </div>
-                                                        <div class="col">
+                                                        </li>
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 水
                                                             </a>
-                                                        </div>
-                                                        <div class="col">
+                                                        </li>
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 火
                                                             </a>
-                                                        </div>
-                                                        <div class="col">
+                                                        </li>
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 風
                                                             </a>
-                                                        </div>
-                                                        <div class="col">
+                                                        </li>
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 雷
                                                             </a>
-                                                        </div>
-                                                        <div class="col">
+                                                        </li>
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 陰
                                                             </a>
-                                                        </div>
-                                                        <div class="col">
+                                                        </li>
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 晶
                                                             </a>
-                                                        </div>
-                                                        <div class="col">
+                                                        </li>
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 無
                                                             </a>
-                                                        </div>
-                                                    </div>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                                 <div class="modal-footer border-0 justify-content-center ">
                                                     <button type="button" class="btn btn-secondary px-5"
@@ -333,23 +743,23 @@
                                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body py-3">
-                                                    <div
+                                                    <ul
                                                         class="row row-cols-2 row-cols-lg-4 g-4 justify-content-center ">
-                                                        <div class="col">
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 天
                                                             </a>
-                                                        </div>
-                                                        <div class="col">
+                                                        </li>
+                                                        <li class="col">
                                                             <a name="" id="option"
                                                                 class="btn btn-light border rounded-4 w-100 shadow-sm"
                                                                 href="#" role="button">
                                                                 冥
                                                             </a>
-                                                        </div>
-                                                    </div>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                                 <div class="modal-footer border-0 justify-content-center ">
                                                     <button type="button" class="btn btn-secondary px-5"
@@ -394,23 +804,19 @@
                                                     <div class="search-group d-flex">
                                                         <input type="search" placeholder="Search" id="personalitySearch"
                                                             class="ps-2">
-                                                        <a id="resetSearch" class="btn btn-outline-danger py-0 fs-4 mx-3 pt-1"
-                                                            href="#">
+                                                        <a id="resetSearch"
+                                                            class="btn btn-outline-danger py-0 fs-4 mx-3 pt-1" href="#">
                                                             <i class="bi bi-trash-fill"></i></a>
-                                                        <!-- <a id="resetSearch"
-                                                            class="align-self-center border mx-3 rounded-pill  fs-4 px-3"
-                                                            href="#"><i class="bi bi-trash-fill"></i></a> -->
                                                     </div>
                                                     <button type="button"
                                                         class="btn-close position-absolute end-0 me-3 p-2"
                                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body py-3 overflow-auto" style="height:16rem">
-
-                                                    <div
+                                                    <ul
                                                         class="row row-cols-2 row-cols-lg-3 g-4 justify-content-center">
 
-                                                    </div>
+                                                    </ul>
                                                 </div>
                                                 <div class="modal-footer border-0 justify-content-center ">
                                                     <button type="button" class="btn btn-secondary px-5"
@@ -428,9 +834,7 @@
                     </table>
                 </div>
             </div>
-        </section>
 
-        <section>
             <div class="row justify-content-center mx-0">
                 <div class="col-lg-10 p-0 p-lg-3">
                     <table

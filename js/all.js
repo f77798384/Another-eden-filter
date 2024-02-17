@@ -24,7 +24,9 @@ let partyPersonality = [];
     originPersonality = Array.from(new Set(personality.split(','))).slice(0,-1);
     PersonalityList();
     Comparison();
-    datainitialization(characterData);
+    // roledataList();
+    //datainitialization(characterData);
+    render();
 })();
 
 (async function(){
@@ -54,7 +56,7 @@ $('.modal').on('hidden.bs.modal',function(e){
     //復原篩選項目
     let modaltype = `#${modal.find('#submit').data('type')}`;
     let option = modal.find(' #option');
-    let filter_items = $('#filter-items').find(modaltype).text().split(', ');
+    let filter_items = $(this).parentsUntil('tbody').find(modaltype).text().split(', ');
     modal.find('#reset').click();
     $.each(option,(index,items) => {
         filter_items.forEach(options =>{
@@ -76,22 +78,31 @@ $('.modal-footer #reset').on('click',function (e) {
 $('.modal-footer #submit').on('click',function (e) { 
     //送出
     e.preventDefault();
-    let str = [];
+    let display = [];
     $(e.target).parentsUntil('.modal').find(' #option.active').each(function (index,items) {
-        str.push($(items).text().trim());
+        display.push($(items).text().trim());
     })
     $(`#${$(e.target).data('type')}`).html(
-        (str == '' ? '無篩選條件' : str.join(', '))
+        (display == '' ? '無篩選條件' : display.join(', '))
     )
     $('#personalitySearch').val('');
-    PersonalityList();
-    render();
+    let tab = $('.nav-item .active').attr('id')
+    switch(tab){
+        case 'ctr':
+            PersonalityList();
+            render();
+            break;
+        case 'rtr':
+            // roledataList();
+            render();
+            break;
+    }
 });
 $('#resetall').on('click',function (e) { 
     //全部重置
-    e.preventDefault();
-    $(' #reset').click();
-    $(' #submit').click();
+    let tab = $('.nav-item .active').attr('id');
+    $(`.${tab} #reset`).click();
+    $(`.${tab} #submit`).click();
 });
 $('#personalitySearch').change(function(e){
     //搜尋個性
@@ -102,8 +113,10 @@ $('#resetSearch').click(function(e){
     e.preventDefault();
     $(e.target).parentsUntil('.modal').find(' #option').parent().removeClass('d-none');
     $('#personalitySearch').val('');
+    
 })
 $('#Ptype').click(function(){
+    //P化清單
     $(this).toggleClass('active');
     if($(this).hasClass('active')){
         $('#personalityModal #option.active').each((index,items) => {
@@ -120,24 +133,86 @@ $('#Ptype').click(function(){
     }
     render();
 })
+$('#r-Ptype').click(function(){
+    //P化清單
+    $(this).toggleClass('active');
+    if($(this).hasClass('active')){
+        rolePersonality(partyPersonality);
+        return;
+    }else{
+        rolePersonality();
+        return;
+    }
+})
+$('#roledataList').change(function(e){
+    //角色名單選擇
+    if($('#r-Ptype').hasClass('active')){
+        rolePersonality(partyPersonality);
+        return;
+    }else{
+        rolePersonality();
+        return;
+    }
+})
+$('#resetrolesearch').click(function(e){
+    //rtr重置
+    $('#roledataList').val('');
+    $('#rolepersonality').html('');
+    $('#r-cha tbody').html('');
+    window.location = "#roledataList";
+})
+$('.nav-item a').click(function(e){
+    //tab switch
+    let tab = $(this).attr('id');
+    if($(this).hasClass('active')||tab =='resetall'){
+        return;
+    }else{
+        $(this).addClass('active').parent().siblings().children('a').removeClass('active')
+        $('main section').addClass('d-none')
+        $(`.${tab}`).removeClass('d-none')
+        return;
+    }
+})
+
 
 //資料刷新
 function render(){
-    if ($('#weapon').text() == '無篩選條件' && 
-    $('#element').text() == '無篩選條件' && 
-    $('#style').text() == '無篩選條件' && 
-    $('#LStype').text() == '無篩選條件' && 
-    $('#personality').text() == '無篩選條件'){
-        datainitialization(characterData);
-        return;
+    let tab = $('.nav-item .active').attr('id');
+    let renderdata = '';
+    if ($((tab == 'rtr' ? '#r-weapon' : '#weapon')
+    ).text() == '無篩選條件' && 
+    $((tab == 'rtr' ? '#r-element' : '#element')
+    ).text() == '無篩選條件' && 
+    $((tab == 'rtr' ? '#r-style' : '#style')
+    ).text() == '無篩選條件' && 
+    $((tab == 'rtr' ? '#r-LStype' : '#LStype')
+    ).text() == '無篩選條件' && 
+    (tab == 'rtr' ? true : $('#personality').text() == '無篩選條件')){
+
     }else{
-        let renderdata = characterData.filter(items => (transform($('#element'),items['屬性']) &&
-        transform($('#weapon'),items['武器類型']) &&
-        transform($('#LStype'),items['天冥']) &&
-        transform($('#style'),items['頭銜']) &&
-        transform($('#personality'),items['個性'])
+        renderdata = characterData.filter(items => 
+        (transform($((tab == 'rtr' ? '#r-element' : '#element')
+        ),items['屬性']) &&
+        transform($((tab == 'rtr' ? '#r-weapon' : '#weapon')
+        ),items['武器類型']) &&
+        transform($((tab == 'rtr' ? '#r-LStype' : '#LStype')
+        ),items['天冥']) &&
+        transform($((tab == 'rtr' ? '#r-style' : '#style')
+        ),items['頭銜']) &&
+        (tab == 'rtr' ? true : transform($('#personality'),items['個性']))
         ));
-        datainitialization(renderdata);
+    }
+    switch (tab){
+        case 'rtr':
+            roledataList((renderdata ? renderdata:characterData))
+            break;
+        case 'ctr':
+            (renderdata ? datainitialization(renderdata):datainitialization(characterData));
+                break;
+        default:
+            roledataList(characterData);
+            datainitialization(characterData);
+            break;
     }
 }
 //條件篩選
@@ -160,6 +235,13 @@ function components(condition,data){
                     `;
                     return
                 }
+            }else if($('#r-Ptype').hasClass('active')){
+                if(partyPersonality.includes(items)){
+                    content += `
+                    <span ${highlight(condition,items)} >${items}</span>
+                    `;
+                    return
+                }
             }else{
                 content += `
                 <span ${highlight(condition,items)} >${items}</span>
@@ -172,7 +254,7 @@ function components(condition,data){
 }
 //highlight
 function highlight(condition,data){
-    if(condition.text().split(', ').some(a => data.includes(a))){
+    if(condition.some(a => data.includes(a))){
         return ` class="highlight"`;
     }else{
         return `class=""`;
@@ -210,51 +292,81 @@ function Comparison(){
 }
 //資料初始化
 function datainitialization(data){
+    let tab = $('.nav-item .active').attr('id')
     let display = '';
-    data.forEach(function(items,index){
-        display +=`
-        <tr>
-            <td>${items['角色中文名稱']}</td>
-            <td>${components($('#style'),items['頭銜'])}</td>
-            <td>${components($('#personality'),items['武器類型'])}</td>
-            <td>
-                ${components($('#element'),items['屬性'])}
-            </td>
-            <td>
-                ${components($('#personality'),items['個性'])}
-            </td>
-        </tr>
-        `;
-    });
-    $('#cha tbody').html(display);
+    switch (tab) {
+        case 'rtr':
+            data.forEach(items => {
+                display+=`<option value="${items['角色中文名稱']} ${items['頭銜']}">
+                </option>`;
+            });
+            $('#datalistOptions').html(display);
+            break;
+        case 'ctr':
+            data.forEach(function(items,index){
+                display +=`
+                <tr>
+                    <td>${items['角色中文名稱']}</td>
+                    <td>${components($('#style').text().split(', '),items['頭銜'])}</td>
+                    <td>${components($('#weapon').text().split(', '),items['武器類型'])}</td>
+                    <td>
+                        ${components($('#element').text().split(', '),items['屬性'])}
+                    </td>
+                    <td>
+                        ${components($('#personality').text().split(', '),items['個性'])}
+                    </td>
+                </tr>
+                `;
+            });
+            $('#cha tbody').html(display);
+            break;
+        default :
+            data.forEach(function(items,index){
+                display +=`
+                <tr>
+                    <td>${items['角色中文名稱']}</td>
+                    <td>${components($('#style').text().split(', '),items['頭銜'])}</td>
+                    <td>${components($('#weapon').text().split(', '),items['武器類型'])}</td>
+                    <td>
+                        ${components($('#element').text().split(', '),items['屬性'])}
+                    </td>
+                    <td>
+                        ${components($('#personality').text().split(', '),items['個性'])}
+                    </td>
+                </tr>
+                `;
+            });
+            $('#cha tbody').html(display);
+            break;
+    }
 }
 //個性表單刷新
 function PersonalityList(condition){
-    let str = '';
+    let display = '';
     originPersonality.forEach(items => {
         if(condition && condition.includes(items)){
-            str += `
-            <div class="col">
+            display += `
+            <li class="col">
                 <a id="option"
                     class="btn btn-light border rounded-4 w-100 shadow-sm"
                     href="#" role="button">
                     ${items}
                 </a>
-            </div>
+            </li>
             `;
         }else if(condition == undefined){
-            str += `
-            <div class="col">
+            display += `
+            <li class="col">
                 <a id="option"
                     class="btn btn-light border rounded-4 w-100 shadow-sm"
                     href="#" role="button">
                     ${items}
                 </a>
-            </div>
+            </li>
             `;
         }
     })
-    $('#personalityModal .modal-body .row').html(str);
+    $('#personalityModal .modal-body .row').html(display);
 }
 //個性搜尋
 function Psearch(condition){
@@ -270,4 +382,79 @@ function Psearch(condition){
             $(items).parent().removeClass('d-none')
         })
     }
+}
+//角色名單刷新
+function roledataList(data){
+    let display = '';
+    data.forEach(items => {
+        display+=`<option value="${items['角色中文名稱']} ${items['頭銜']}">
+        </option>`;
+    });
+    $('#datalistOptions').html(display);
+}
+//角色個性集合
+function rolePersonality(condition){
+    let role = characterData.find(items => $('#roledataList').val().includes(items['角色中文名稱']) && $('#roledataList').val().includes(items['頭銜']));
+    let display = '';
+    let arr = [];
+    if(role){
+        role['屬性'].forEach(items => {
+            display +=`
+            <span>${items}</span>
+            `;
+            arr.push(items);
+        })
+        role['武器類型'].forEach(items => {
+            display +=`
+            <span>${items}</span>
+            `;
+            arr.push(items);
+        })
+        role['個性'].forEach(items => {
+            if(condition){
+                if(condition.includes(items)){
+                    display +=`
+                    <span>${items}</span>
+                    `;
+                    arr.push(items);
+                }
+            }else{
+                display +=`
+                <span>${items}</span>
+                `;
+                arr.push(items);
+            }
+        })
+    }else{
+        return
+    }
+    rtrList(arr,role);
+    $('#rolepersonality').html(display);
+}
+function rtrList(arr,role){
+    let renderdata = '';
+    let display = '';
+    renderdata = characterData.filter(items => {
+        return (
+            items['屬性'].some(a => arr.includes(a)) ||
+            items['武器類型'].some(a => arr.includes(a)) ||
+            items['個性'].some(a => arr.includes(a))
+        )
+    })
+    renderdata.forEach(function(items,index){
+        display +=`
+        <tr>
+            <td>${items['角色中文名稱']}</td>
+            <td>${components(role['頭銜'],items['頭銜'])}</td>
+            <td>${components(role['武器類型'],items['武器類型'])}</td>
+            <td>
+                ${components(role['屬性'],items['屬性'])}
+            </td>
+            <td>
+                ${components(role['個性'],items['個性'])}
+            </td>
+        </tr>
+        `;
+    });
+    $('#r-cha tbody').html(display);
 }
