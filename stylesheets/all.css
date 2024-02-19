@@ -13009,4 +13009,7 @@ td span {
 .update ul li {
   text-align: start !important;
   list-style-type: decimal;
+}
+.update ul li.done {
+  text-decoration-line: line-through;
 }/*# sourceMappingURL=all.css.map */

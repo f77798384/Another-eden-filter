@@ -428,6 +428,7 @@ function roledataList(data){
 //角色個性集合
 function rolePersonality(condition){
     let role = characterData.find(items => $('#roledataList').val().includes(items['角色中文名稱']) && $('#roledataList').val().includes(items['頭銜']));
+    let index = characterData.findIndex(items => $('#roledataList').val().includes(items['角色中文名稱']) && $('#roledataList').val().includes(items['頭銜']));
     let display = '';
     let arr = [];
     if(role){
@@ -461,24 +462,35 @@ function rolePersonality(condition){
     }else{
         return;
     }
-    rtrList(arr,role);
+    rtrList(arr,role,index);
     $('#rolepersonality').html(display);
 }
-function rtrList(arr,role){
+function rtrList(arr,role,index){
     let renderdata = '';
     let display = '';
-    renderdata = characterData.filter(items => {
+    renderdata = characterData.filter((items,i) => {
         return (
-            items['屬性'].some(a => arr.includes(a)) ||
+            (items['屬性'].some(a => arr.includes(a)) ||
             items['武器類型'].some(a => arr.includes(a)) ||
-            items['個性'].some(a => arr.includes(a))
+            items['個性'].some(a => arr.includes(a))) && items['角色中文名稱'] != role['角色中文名稱']
         );
     })
+    
+    renderdata.forEach(items => {
+        let count = 0;
+        items['屬性'].forEach(a => arr.includes(a) ? count++ : '')
+        items['武器類型'].forEach(a => arr.includes(a) ? count++ : '')
+        items['個性'].forEach(a => arr.includes(a) ? count++ : '')
+        items['sort'] = count
+    })
+
+    renderdata.sort((a,b) => b['sort'] - a['sort'])
+
     renderdata.forEach(function(items,index){
         display +=`
         <tr>
             <td>${items['角色中文名稱']}</td>
-            <td>${components(role['頭銜'],items['頭銜'])}</td>
+            <td>${components(['none'],items['頭銜'])}</td>
             <td>${components(role['武器類型'],items['武器類型'])}</td>
             <td>
                 ${components(role['屬性'],items['屬性'])}
@@ -490,4 +502,5 @@ function rtrList(arr,role){
         `;
     });
     $('#r-cha tbody').html(display);
+    console.log(renderdata)
 }
