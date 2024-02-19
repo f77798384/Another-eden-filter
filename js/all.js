@@ -501,5 +501,4 @@ function rtrList(arr,role,index){
         `;
     });
     $('#r-cha tbody').html(display);
-    console.log(renderdata)
 }
