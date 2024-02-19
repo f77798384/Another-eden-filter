@@ -174,7 +174,6 @@ $('#resetrolesearch').click(function(e){
     $('#roledataList').val('');
     $('#rolepersonality').html('');
     $('#r-cha tbody').html('');
-    window.location = "#roledataList";
 })
 $('.nav-item a').click(function(e){
     //tab switch
