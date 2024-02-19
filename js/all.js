@@ -159,6 +159,7 @@ $('#r-Ptype').click(function(){
 })
 $('#roledataList').change(function(e){
     //角色名單選擇
+    e.preventDefault();
     if($('#r-Ptype').hasClass('active')){
         rolePersonality(partyPersonality);
         return;
