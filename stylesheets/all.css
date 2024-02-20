@@ -13006,6 +13006,11 @@ td span {
 .update ul {
   margin: 0 0 0 2rem !important;
 }
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .update ul {
+    margin: 0 0 0 1rem !important;
+  }
+}
 .update ul li {
   text-align: start !important;
   list-style-type: decimal;
