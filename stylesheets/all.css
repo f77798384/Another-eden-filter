@@ -13004,7 +13004,7 @@ td span {
 }
 
 .update ul {
-  margin: 0 0 0 2rem !important;
+  margin: 0 0 0 1.5rem !important;
 }
 @media (min-width: 992px) and (max-width: 1199.98px) {
   .update ul {
