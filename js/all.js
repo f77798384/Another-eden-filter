@@ -7,9 +7,6 @@ let partyPersonality = [];
     const response = await fetch('./data/data.csv');
     const text = await response.text();
     characterData = Papa.parse(text,{header:true,skipEmptyLines:true}).data;
-    characterData.sort(function(a,b){
-        return Date.parse(b['實裝時間']) - Date.parse(a['實裝時間']);
-    })
     let personality = '';
     characterData.forEach(function(items){
         if(items['個性'] != ''){
@@ -24,6 +21,9 @@ let partyPersonality = [];
     originPersonality = Array.from(new Set(personality.split(','))).slice(0,-1);
     PersonalityList();
     Comparison();
+    characterData.sort(function(a,b){
+        return Date.parse(b['實裝時間']) - Date.parse(a['實裝時間']);
+    })
     // roledataList();
     //datainitialization(characterData);
     render();
