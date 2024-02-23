@@ -12998,6 +12998,10 @@ td span {
   background-color: rgb(255, 255, 0);
 }
 
+.tips {
+  border: 2px rgb(0, 0, 0) solid;
+}
+
 .container ul {
   list-style: none !important;
   padding-left: 0 !important;

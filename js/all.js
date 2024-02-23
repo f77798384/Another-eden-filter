@@ -17,18 +17,17 @@ let partyPersonality = [];
         items['屬性'] = items['屬性'].split(',');
         items['天冥'] = items['天冥'].split(',');
         items['武器類型'] = items['武器類型'].split(',');
+        items['特殊條件'] = items['特殊條件'].split(',');
     })
     originPersonality = Array.from(new Set(personality.split(','))).slice(0,-1);
     PersonalityList();
     Comparison();
+    specondition(characterData)
     characterData.sort(function(a,b){
         return Date.parse(b['實裝時間']) - Date.parse(a['實裝時間']);
     })
-    // roledataList();
-    //datainitialization(characterData);
     render();
 })();
-
 (async function(){
     const response = await fetch('./data/Ptype.csv');
     const text = await response.text();
@@ -238,23 +237,23 @@ function transform(condition,data){
     }
 }
 //components
-function components(condition,data){
+function components(condition,select,data){
     let tab = $('.nav-item .active').attr('id');
     let content = '';
-    if(data != ''){
-        data.forEach(function(items){
+    if(select != ''){
+        select.forEach(function(items){
             switch (tab) {
                 case 'rtr':
                     if($('#r-Ptype').hasClass('active')){
                         if(partyPersonality.includes(items)){
                             content += `
-                            <span ${highlight(condition,items)} >${items}</span>
+                            <span ${highlight(condition,items,data)}>${items}</span>
                             `;
                             return
                         }
                     }else{
                         content += `
-                        <span ${highlight(condition,items)} >${items}</span>
+                        <span ${highlight(condition,items,data)}>${items}</span>
                         `;
                         return
                     }
@@ -263,20 +262,20 @@ function components(condition,data){
                     if($('#Ptype').hasClass('active')){
                         if(partyPersonality.includes(items)){
                             content += `
-                            <span ${highlight(condition,items)} >${items}</span>
+                            <span ${highlight(condition,items,data)}>${items}</span>
                             `;
                             return;
                         }
                     }else{
                         content += `
-                        <span ${highlight(condition,items)} >${items}</span>
+                        <span ${highlight(condition,items,data)}>${items}</span>
                         `;
                         return;
                     }
                     break;
                 default:
                     content += `
-                        <span ${highlight(condition,items)} >${items}</span>
+                        <span ${highlight(condition,items,data)}>${items}</span>
                         `;
                     break;
             }
@@ -285,12 +284,24 @@ function components(condition,data){
     return content;
 }
 //highlight
-function highlight(condition,data){
-    if(condition.some(a => data.includes(a))){
-        return ` class="highlight"`;
-    }else{
-        return `class=""`;
+function highlight(condition,items,data){
+    let str = '';
+    let cla = '';
+    if(data){
+        if(data['特殊條件'][0] != ''){
+            data['特殊條件'].some(a => {
+                let key = Object.keys(a)
+                if(items == key){
+                    cla += ` tips `
+                    str += `data-bs-toggle="tooltip" title="${a[key]}"`;
+                }
+            })
+        }
     }
+    if(condition.some(a => items.includes(a))){
+        cla += ` highlight `;
+    }
+    return `class="${cla}" ${str}`;
 }
 //篩選不重複
 function Comparison(){
@@ -307,6 +318,7 @@ function Comparison(){
                         characterData[i]['頭銜'].push(items['頭銜'][0]);
                         characterData[i]['實裝時間']=items['實裝時間'];
                         characterData[i]['星數']=items['星數'];
+                        characterData[i]['特殊條件']=items['特殊條件'];
                         return copy = false;
                     }else{
                         return copy = true;
@@ -345,7 +357,7 @@ function datainitialization(data){
                         ${components($('#element').text().split(', '),items['屬性'])}
                     </td>
                     <td>
-                        ${components($('#personality').text().split(', '),items['個性'])}
+                        ${components($('#personality').text().split(', '),items['個性'],items)}
                     </td>
                 </tr>
                 `;
@@ -363,7 +375,7 @@ function datainitialization(data){
                         ${components($('#element').text().split(', '),items['屬性'])}
                     </td>
                     <td>
-                        ${components($('#personality').text().split(', '),items['個性'])}
+                        ${components($('#personality').text().split(', '),items['個性'],items)}
                     </td>
                 </tr>
                 `;
@@ -371,6 +383,7 @@ function datainitialization(data){
             $('#cha tbody').html(display);
             break;
     }
+    tooltipOn()
 }
 //個性表單刷新
 function PersonalityList(condition){
@@ -463,6 +476,7 @@ function rolePersonality(condition){
     }
     rtrList(arr,role,index);
     $('#rolepersonality').html(display);
+    tooltipOn()
 }
 function rtrList(arr,role,index){
     let renderdata = '';
@@ -495,10 +509,30 @@ function rtrList(arr,role,index){
                 ${components(role['屬性'],items['屬性'])}
             </td>
             <td>
-                ${components(role['個性'],items['個性'])}
+                ${components(role['個性'],items['個性'],items)}
             </td>
         </tr>
         `;
     });
     $('#r-cha tbody').html(display);
+    tooltipOn()
 }
+function specondition(data){
+    data.forEach((items,index) => {
+        items['特殊條件'].forEach((a,b) => {
+            let perLen = a.indexOf(':');
+            let per = a.substring(0,perLen)
+            let content = a.substring(perLen+1,a.length)
+            if(perLen > 0){
+                data[index]['特殊條件'][b] = {[per]:content}
+            }
+        })
+    })
+}
+function tooltipOn(){
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+}
+
