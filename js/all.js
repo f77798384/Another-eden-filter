@@ -420,7 +420,8 @@ function PersonalityList(condition){
     </a>
         </li>
     `)
-    $('#personalityModal .modal-body .row').html(display);
+    console.log(`${display}</a></li>`)
+    $('#personalityModal .modal-body .row').html(`${display}</a></li>`);
 }
 //個性搜尋
 function Psearch(condition){
