@@ -420,11 +420,11 @@ function PersonalityList(condition){
     </a>
         </li>
     `)
-    console.log(`${display}</a></li>`)
     $('#personalityModal .modal-body .row').html(`${display}</a></li>`);
 }
 //個性搜尋
 function Psearch(condition){
+    $('#personalityModal .modal-body .row li').removeClass('d-none');
     if(condition){
         $('#personalityModal .modal-body .row #option').each((index,items) => {
             if($(items).text().includes(condition) == false){
