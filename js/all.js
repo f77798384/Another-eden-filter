@@ -85,12 +85,15 @@ $('.modal-footer #submit').on('click',function (e) {
         (display == '' ? '無篩選條件' : display.join(', '))
     );
     $('#personalitySearch').val('');
+    console.log($(e.target).data('type'))
+    if($(e.target).data('type')=='personality'){
+        PersonalityList()
+    }
     let tab = $('.nav-item .active').attr('id');
     switch(tab){
-        case 'ctr':
-            render();
+        case 'update':
             break;
-        case 'rtr':
+        default:
             render();
             break;
     }
@@ -120,13 +123,11 @@ $('#resetSearch').click(function(e){
                 $(items).removeClass('active').parent().addClass('d-none');
             }
         })
-        //$(`.${tab} #submit`).click();
         return;
     }else{
         $('#personalityModal #option').parent().removeClass('d-none');
     }
     $('#personalitySearch').val('');
-    
 })
 $('#Ptype').click(function(){
     //P化清單
@@ -148,24 +149,14 @@ $('#Ptype').click(function(){
 $('#r-Ptype').click(function(){
     //P化清單
     $(this).toggleClass('active');
-    if($(this).hasClass('active')){
-        rolePersonality(partyPersonality);
-        return;
-    }else{
-        rolePersonality();
-        return;
-    }
+    rolePersonality(
+        $(this).hasClass('active')? partyPersonality : '');
 })
 $('#roledataList').change(function(e){
     //角色名單選擇
     e.preventDefault();
-    if($('#r-Ptype').hasClass('active')){
-        rolePersonality(partyPersonality);
-        return;
-    }else{
-        rolePersonality();
-        return;
-    }
+    rolePersonality(
+        $('#r-Ptype').hasClass('active')?partyPersonality:'')
 })
 $('#resetrolesearch').click(function(e){
     //rtr重置
@@ -386,31 +377,49 @@ function datainitialization(data){
     tooltipOn()
 }
 //個性表單刷新
+// function PersonalityList(condition){
+//     let display = '';
+//     originPersonality.forEach(items => {
+//         if((condition && condition.includes(items))||condition == undefined){
+//             display += `
+//             <li class="col">
+//                 <a id="option"
+//                     class="btn btn-light border rounded-4 w-100 shadow-sm"
+//                     href="#" role="button">
+//                     ${items}
+//                 </a>
+//             </li>
+//             `;
+//         }
+//     })
+//     $('#personalityModal .modal-body .row').html(display);
+// }
 function PersonalityList(condition){
+    let prefix = `
+    <li class="col">
+        <a id="option"
+            class="btn btn-light border rounded-4 w-100 shadow-sm"
+            href="#" role="button">
+    `
+    let arr = [];
     let display = '';
+    let active = [];
+    $('#personalityModal #option.active').each((index,items) => {
+        active.push($(items).html().trim())        
+    })
     originPersonality.forEach(items => {
-        if(condition && condition.includes(items)){
-            display += `
-            <li class="col">
-                <a id="option"
-                    class="btn btn-light border rounded-4 w-100 shadow-sm"
-                    href="#" role="button">
-                    ${items}
-                </a>
-            </li>
-            `;
-        }else if(condition == undefined){
-            display += `
-            <li class="col">
-                <a id="option"
-                    class="btn btn-light border rounded-4 w-100 shadow-sm"
-                    href="#" role="button">
-                    ${items}
-                </a>
-            </li>
-            `;
+        if((condition && condition.includes(items))||condition == undefined){
+            if(active.includes(items)){
+                arr.unshift(prefix + items)
+            }else{
+                arr.push(prefix + items)
+            }
         }
     })
+    display = arr.join(`
+    </a>
+        </li>
+    `)
     $('#personalityModal .modal-body .row').html(display);
 }
 //個性搜尋
@@ -535,4 +544,3 @@ function tooltipOn(){
     return new bootstrap.Tooltip(tooltipTriggerEl)
     })
 }
-
