@@ -85,7 +85,6 @@ $('.modal-footer #submit').on('click',function (e) {
         (display == '' ? '無篩選條件' : display.join(', '))
     );
     $('#personalitySearch').val('');
-    console.log($(e.target).data('type'))
     if($(e.target).data('type')=='personality'){
         PersonalityList()
     }
@@ -377,23 +376,6 @@ function datainitialization(data){
     tooltipOn()
 }
 //個性表單刷新
-// function PersonalityList(condition){
-//     let display = '';
-//     originPersonality.forEach(items => {
-//         if((condition && condition.includes(items))||condition == undefined){
-//             display += `
-//             <li class="col">
-//                 <a id="option"
-//                     class="btn btn-light border rounded-4 w-100 shadow-sm"
-//                     href="#" role="button">
-//                     ${items}
-//                 </a>
-//             </li>
-//             `;
-//         }
-//     })
-//     $('#personalityModal .modal-body .row').html(display);
-// }
 function PersonalityList(condition){
     let prefix = `
     <li class="col">
