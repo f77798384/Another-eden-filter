@@ -86,7 +86,7 @@ $('.modal-footer #submit').on('click',function (e) {
     );
     $('#personalitySearch').val('');
     if($(e.target).data('type')=='personality'){
-        PersonalityList()
+        PersonalityList();
     }
     let tab = $('.nav-item .active').attr('id');
     switch(tab){
@@ -103,6 +103,9 @@ $('#resetall').on('click',function (e) {
     let tab = $('.nav-item .active').attr('id');
     $(`.${tab} #reset`).click();
     $(`.${tab} #submit`).click();
+    if($('#Ptype').hasClass('active')){
+        $('#Ptype').click();
+    }
     if(tab == 'rtr'){
         $('#r-cha tbody').html('');
         $('#resetrolesearch').click();
@@ -135,10 +138,18 @@ $('#Ptype').click(function(){
     if($(this).hasClass('active')){
         $('#personalityModal #option').each((index,items) => {
             if(partyPersonality.includes($(items).text().trim()) == false){
-                $(items).removeClass('active').parent().addClass('d-none');
+                $(items).removeClass('active');
             }
         })
-        $(`.${tab} #submit`).click();
+        $(`#personalityModal #submit`).click();
+        let active = $('#personality').text().split(', ');
+        $('#personalityModal #option').each((index,items) => {
+            if(active.includes($(items).text().trim())){
+                $(items).addClass('active');
+            }else if(partyPersonality.includes($(items).text().trim()) == false){
+                $(items).parent().addClass('d-none');
+            }
+        })
         return;
     }else{
         $('#personalityModal #option').parent().removeClass('d-none');
@@ -282,7 +293,7 @@ function highlight(condition,items,data){
             data['特殊條件'].some(a => {
                 let key = Object.keys(a)
                 if(items == key){
-                    cla += ` tips `
+                    cla += ` tips `;
                     str += `data-bs-toggle="tooltip" title="${a[key]}"`;
                 }
             })
@@ -382,26 +393,26 @@ function PersonalityList(condition){
         <a id="option"
             class="btn btn-light border rounded-4 w-100 shadow-sm"
             href="#" role="button">
-    `
+    `;
     let arr = [];
     let display = '';
     let active = [];
     $('#personalityModal #option.active').each((index,items) => {
-        active.push($(items).html().trim())        
+        active.push($(items).html().trim());
     })
     originPersonality.forEach(items => {
         if((condition && condition.includes(items))||condition == undefined){
             if(active.includes(items)){
-                arr.unshift(prefix + items)
+                arr.unshift(prefix + items);
             }else{
-                arr.push(prefix + items)
+                arr.push(prefix + items);
             }
         }
     })
     display = arr.join(`
     </a>
         </li>
-    `)
+    `);
     $('#personalityModal .modal-body .row').html(`${display}</a></li>`);
 }
 //個性搜尋
@@ -468,7 +479,7 @@ function rolePersonality(condition){
     }
     rtrList(arr,role,index);
     $('#rolepersonality').html(display);
-    tooltipOn()
+    tooltipOn();
 }
 function rtrList(arr,role,index){
     let renderdata = '';
@@ -483,13 +494,13 @@ function rtrList(arr,role,index){
     
     renderdata.forEach(items => {
         let count = 0;
-        items['屬性'].forEach(a => arr.includes(a) ? count++ : '')
-        items['武器類型'].forEach(a => arr.includes(a) ? count++ : '')
-        items['個性'].forEach(a => arr.includes(a) ? count++ : '')
-        items['sort'] = count
+        items['屬性'].forEach(a => arr.includes(a) ? count++ : '');
+        items['武器類型'].forEach(a => arr.includes(a) ? count++ : '');
+        items['個性'].forEach(a => arr.includes(a) ? count++ : '');
+        items['sort'] = count;
     })
 
-    renderdata.sort((a,b) => b['sort'] - a['sort'])
+    renderdata.sort((a,b) => b['sort'] - a['sort']);
 
     renderdata.forEach(function(items,index){
         display +=`
@@ -507,7 +518,7 @@ function rtrList(arr,role,index){
         `;
     });
     $('#r-cha tbody').html(display);
-    tooltipOn()
+    tooltipOn();
 }
 function specondition(data){
     data.forEach((items,index) => {
@@ -518,12 +529,12 @@ function specondition(data){
             if(perLen > 0){
                 data[index]['特殊條件'][b] = {[per]:content}
             }
-        })
-    })
+        });
+    });
 }
 function tooltipOn(){
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
+    });
 }
