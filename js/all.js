@@ -18,10 +18,12 @@ let partyPersonality = [];
         items['天冥'] = items['天冥'].split(',');
         items['武器類型'] = items['武器類型'].split(',');
         items['特殊條件'] = items['特殊條件'].split(',');
+        items['角色編號'] = items['角色編號'].split(',');
     })
     originPersonality = Array.from(new Set(personality.split(','))).slice(0,-1);
     PersonalityList();
     Comparison();
+    preload();
     specondition(characterData)
     characterData.sort(function(a,b){
         return Date.parse(b['實裝時間']) - Date.parse(a['實裝時間']);
@@ -38,7 +40,14 @@ let partyPersonality = [];
     })
 })();
 
-
+const imgPreloadArr = [];
+function preload(){
+    characterData.forEach(items => {
+        const img = new Image();
+        img.src = `./images/characters/${items['角色編號'][0]}.png`
+        imgPreloadArr.push(img)
+    })
+}
 
 //監聽
 $(' #selector').on('click',function(e){
@@ -317,6 +326,7 @@ function Comparison(){
                     });
                     if(len == a['個性'].length && a['屬性'][0] == items['屬性'][0]){
                         characterData[i]['頭銜'].push(items['頭銜'][0]);
+                        characterData[i]['角色編號'].push(items['角色編號'][0]);
                         characterData[i]['實裝時間']=items['實裝時間'];
                         characterData[i]['星數']=items['星數'];
                         characterData[i]['特殊條件']=items['特殊條件'];
@@ -351,7 +361,7 @@ function datainitialization(data){
             data.forEach(function(items,index){
                 display +=`
                 <tr>
-                    <td>${items['角色中文名稱']}</td>
+                    <td ${items['角色編號'][0] == ''? `data-bs-toggle="tooltip" title="暫無圖片"` : `data-bs-toggle="tooltip" data-bs-html="true" title="<img  src='./images/characters/${items['角色編號'][0]}.png'>"`}>${items['角色中文名稱']}</td>
                     <td>${components($('#style').text().split(', '),items['頭銜'])}</td>
                     <td>${components($('#weapon').text().split(', '),items['武器類型'])}</td>
                     <td>
@@ -369,7 +379,7 @@ function datainitialization(data){
             data.forEach(function(items,index){
                 display +=`
                 <tr>
-                    <td>${items['角色中文名稱']}</td>
+                    <td ${items['角色編號'][0] == ''? `data-bs-toggle="tooltip" title="暫無圖片"` : `data-bs-toggle="tooltip" data-bs-html="true" title="<img  src='./images/characters/${items['角色編號'][0]}.png'>"`}>${items['角色中文名稱']}</td>
                     <td>${components($('#style').text().split(', '),items['頭銜'])}</td>
                     <td>${components($('#weapon').text().split(', '),items['武器類型'])}</td>
                     <td>
@@ -505,7 +515,7 @@ function rtrList(arr,role,index){
     renderdata.forEach(function(items,index){
         display +=`
         <tr>
-            <td>${items['角色中文名稱']}</td>
+            <td ${items['角色編號'][0] == ''? `data-bs-toggle="tooltip" title="暫無圖片"` : `data-bs-toggle="tooltip" data-bs-html="true" title="<img  src='./images/characters/${items['角色編號'][0]}.png'>"`}>${items['角色中文名稱']}</td>
             <td>${components(['none'],items['頭銜'])}</td>
             <td>${components(role['武器類型'],items['武器類型'])}</td>
             <td>
