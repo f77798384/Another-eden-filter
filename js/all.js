@@ -345,6 +345,21 @@ function Comparison(){
         }
     })
 }
+function carousel(data){
+    str = `<div id='carouselExampleIndicators' class='carousel slide carousel-fade' data-bs-ride='carousel'>
+    <div class='carousel-inner'>`;
+    data.forEach(items => {
+        str += `
+        <div class='carousel-item active carousel-item-start' data-bs-interval='500'>
+            <img src='./images/characters/${items}.png' class='d-block' alt='...'>
+        </div>`
+    })
+    str +=`</div></div>`
+    return str
+}
+
+{/* <td ${items['角色編號'][0] == ''? `data-bs-toggle="tooltip" title="暫無圖片"` : `data-bs-toggle="tooltip" data-bs-html="true" title="${carousel(items['角色編號'])}"`}>${items['角色中文名稱']}</td> */}
+
 //資料初始化
 function datainitialization(data){
     let tab = $('.nav-item .active').attr('id')
@@ -361,7 +376,7 @@ function datainitialization(data){
             data.forEach(function(items,index){
                 display +=`
                 <tr>
-                    <td ${items['角色編號'][0] == ''? `data-bs-toggle="tooltip" title="暫無圖片"` : `data-bs-toggle="tooltip" data-bs-html="true" title="<img  src='./images/characters/${items['角色編號'][0]}.png'>"`}>${items['角色中文名稱']}</td>
+                    <td>${items['角色中文名稱']}</td>
                     <td>${components($('#style').text().split(', '),items['頭銜'])}</td>
                     <td>${components($('#weapon').text().split(', '),items['武器類型'])}</td>
                     <td>
@@ -379,7 +394,7 @@ function datainitialization(data){
             data.forEach(function(items,index){
                 display +=`
                 <tr>
-                    <td ${items['角色編號'][0] == ''? `data-bs-toggle="tooltip" title="暫無圖片"` : `data-bs-toggle="tooltip" data-bs-html="true" title="<img  src='./images/characters/${items['角色編號'][0]}.png'>"`}>${items['角色中文名稱']}</td>
+                    <td>${items['角色中文名稱']}</td>
                     <td>${components($('#style').text().split(', '),items['頭銜'])}</td>
                     <td>${components($('#weapon').text().split(', '),items['武器類型'])}</td>
                     <td>
@@ -515,7 +530,7 @@ function rtrList(arr,role,index){
     renderdata.forEach(function(items,index){
         display +=`
         <tr>
-            <td ${items['角色編號'][0] == ''? `data-bs-toggle="tooltip" title="暫無圖片"` : `data-bs-toggle="tooltip" data-bs-html="true" title="<img  src='./images/characters/${items['角色編號'][0]}.png'>"`}>${items['角色中文名稱']}</td>
+            <td>${items['角色中文名稱']}</td>
             <td>${components(['none'],items['頭銜'])}</td>
             <td>${components(role['武器類型'],items['武器類型'])}</td>
             <td>
