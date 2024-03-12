@@ -2,6 +2,7 @@ let characterData = [];
 let modal = '';
 let originPersonality = [];
 let partyPersonality = [];
+const imgPreloadArr = [];
 //資料載入
 (async function(){
     const response = await fetch('./data/data.csv');
@@ -23,7 +24,6 @@ let partyPersonality = [];
     originPersonality = Array.from(new Set(personality.split(','))).slice(0,-1);
     PersonalityList();
     Comparison();
-    preload();
     specondition(characterData)
     characterData.sort(function(a,b){
         return Date.parse(b['實裝時間']) - Date.parse(a['實裝時間']);
@@ -39,19 +39,19 @@ let partyPersonality = [];
         }
     })
 })();
-
-const imgPreloadArr = [];
-function preload(){
+(async function preload(){
     characterData.forEach(items => {
         if(items['角色編號'][0]==''){
-            return
+            return;
         }else{
-            const img = new Image();
-            img.src = `./images/characters/${items['角色編號'][0]}.png`
-            imgPreloadArr.push(img)
+            items['角色編號'].forEach(a => {
+                const img = new Image();
+                img.src = `./images/characters/${a}.webp`;
+                imgPreloadArr.push(img);
+            })
         }
     })
-}
+})
 
 //監聽
 $(' #selector').on('click',function(e){
@@ -201,7 +201,14 @@ $('.nav-item a').click(function(e){
         return;
     }
 })
-
+$("body").on("mouseenter",".custom-pop-hover", function(){
+    //character-image-pop
+    $(this).closest( ".custom-pop").find(".custom-pop-temp").removeClass("d-none");
+    $(this).closest( ".custom-pop").find(".carousel").carousel({interval: 1000, pause:false, ride:'carousel'});
+   }).on( "mouseleave",".custom-pop-hover", function(){
+    $(this).closest( ".custom-pop").find(".custom-pop-temp").addClass("d-none");
+     $(this).closest( ".custom-pop").find(".carousel").carousel("dispose");
+   } );
 
 //資料刷新
 function render(){
@@ -360,14 +367,14 @@ function carousel(data){
         if(index == 0){
             str += `
             <div class="carousel-item active">
-                <img src='./images/characters/${items}.png'>
+                <img src='./images/characters/${items}.webp'>
             </div>`
         }else if(items == ''){
             return
         }else{
             str += `
             <div class="carousel-item">
-                <img src='./images/characters/${items}.png'>
+                <img src='./images/characters/${items}.webp'>
             </div>`
         }
     })
@@ -375,13 +382,7 @@ function carousel(data){
     return str
 }
 
-$("body").on("mouseenter",".custom-pop-hover", function(){
-    $(this).closest( ".custom-pop").find(".custom-pop-temp").removeClass("d-none");
-    $(this).closest( ".custom-pop").find(".carousel").carousel({interval: 1000, pause:false, ride:'carousel'});
-   }).on( "mouseleave",".custom-pop-hover", function(){
-    $(this).closest( ".custom-pop").find(".custom-pop-temp").addClass("d-none");
-     $(this).closest( ".custom-pop").find(".carousel").carousel("dispose");
-   } );
+
 
 //資料初始化
 function datainitialization(data){
