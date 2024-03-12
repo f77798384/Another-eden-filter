@@ -558,7 +558,11 @@ function rtrList(arr,role,index){
     renderdata.forEach(function(items,index){
         display +=`
         <tr>
-            <td>${items['角色中文名稱']}</td>
+            <td  class="custom-pop">
+                <span  class="custom-pop-hover">${items['角色中文名稱']}
+                ${items['角色編號'][0] == '' ? '' : carousel(items['角色編號'])}
+                </span>
+            </td>
             <td>${components(['none'],items['頭銜'])}</td>
             <td>${components(role['武器類型'],items['武器類型'])}</td>
             <td>
