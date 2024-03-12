@@ -13024,6 +13024,34 @@ td span {
   color: gray;
 }
 
-.tooltip-inner img {
-  width: 100px;
+.custom-pop-hover {
+  position: relative;
+}
+
+.custom-pop-temp {
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  translate: 0 -50%;
+  background-color: rgb(33, 37, 41);
+  border-radius: 10px;
+}
+.custom-pop-temp::before {
+  content: "";
+  position: absolute;
+  border: solid thick rgb(33, 37, 41);
+  left: -4px;
+  z-index: -1;
+  translate: 0 -50%;
+  top: 50%;
+  transform: rotate(45deg);
+}
+
+.carousel {
+  border: 10px solid rgb(33, 37, 41);
+  border-radius: 10px;
+}
+.carousel img {
+  max-width: 100px;
+  max-height: 100px;
 }/*# sourceMappingURL=all.css.map */

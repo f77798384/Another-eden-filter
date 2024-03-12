@@ -43,9 +43,13 @@ let partyPersonality = [];
 const imgPreloadArr = [];
 function preload(){
     characterData.forEach(items => {
-        const img = new Image();
-        img.src = `./images/characters/${items['角色編號'][0]}.png`
-        imgPreloadArr.push(img)
+        if(items['角色編號'][0]==''){
+            return
+        }else{
+            const img = new Image();
+            img.src = `./images/characters/${items['角色編號'][0]}.png`
+            imgPreloadArr.push(img)
+        }
     })
 }
 
@@ -345,20 +349,41 @@ function Comparison(){
         }
     })
 }
+
 function carousel(data){
-    str = `<div id='carouselExampleIndicators' class='carousel slide carousel-fade' data-bs-ride='carousel'>
-    <div class='carousel-inner'>`;
-    data.forEach(items => {
-        str += `
-        <div class='carousel-item active carousel-item-start' data-bs-interval='500'>
-            <img src='./images/characters/${items}.png' class='d-block' alt='...'>
-        </div>`
+    let str = `
+    <div class="custom-pop-temp d-none">
+        <div class="carousel">
+            <div class="carousel-inner">
+    `;
+    data.forEach((items,index) => {
+        if(index == 0){
+            str += `
+            <div class="carousel-item active">
+                <img src='./images/characters/${items}.png'>
+            </div>`
+        }else if(items == ''){
+            return
+        }else{
+            str += `
+            <div class="carousel-item">
+                <img src='./images/characters/${items}.png'>
+            </div>`
+        }
     })
-    str +=`</div></div>`
+    str +=`</div></div></div>`
     return str
 }
 
-{/* <td ${items['角色編號'][0] == ''? `data-bs-toggle="tooltip" title="暫無圖片"` : `data-bs-toggle="tooltip" data-bs-html="true" title="${carousel(items['角色編號'])}"`}>${items['角色中文名稱']}</td> */}
+$("body").on("mouseenter",".custom-pop-hover", function(){
+    console.log("hover in");
+    $(this).closest( ".custom-pop").find(".custom-pop-temp").removeClass("d-none");
+    $(this).closest( ".custom-pop").find(".carousel").carousel({interval: 1000, pause:false, ride:'carousel'});
+   }).on( "mouseleave",".custom-pop-hover", function(){
+    console.log("hover out");
+    $(this).closest( ".custom-pop").find(".custom-pop-temp").addClass("d-none");
+     $(this).closest( ".custom-pop").find(".carousel").carousel("dispose");
+   } );
 
 //資料初始化
 function datainitialization(data){
@@ -375,8 +400,9 @@ function datainitialization(data){
         case 'ctr':
             data.forEach(function(items,index){
                 display +=`
-                <tr>
-                    <td>${items['角色中文名稱']}</td>
+                <tr class="custom-pop">
+                    <td class="custom-pop-hover">${items['角色中文名稱']}</td>
+                    ${items['角色編號'][0] == '' ? '' : carousel(items['角色編號'])}
                     <td>${components($('#style').text().split(', '),items['頭銜'])}</td>
                     <td>${components($('#weapon').text().split(', '),items['武器類型'])}</td>
                     <td>
@@ -394,7 +420,11 @@ function datainitialization(data){
             data.forEach(function(items,index){
                 display +=`
                 <tr>
-                    <td>${items['角色中文名稱']}</td>
+                    <td  class="custom-pop">
+                        <span  class="custom-pop-hover">${items['角色中文名稱']}
+                        ${items['角色編號'][0] == '' ? '' : carousel(items['角色編號'])}
+                        </span>
+                    </td>
                     <td>${components($('#style').text().split(', '),items['頭銜'])}</td>
                     <td>${components($('#weapon').text().split(', '),items['武器類型'])}</td>
                     <td>

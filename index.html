@@ -5,11 +5,11 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-E6NX6DWS5D"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-E6NX6DWS5D');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-E6NX6DWS5D');
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,11 +30,43 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- CSS Custom -->
     <link rel="stylesheet" href="./stylesheets/all.css?_=2024022302">
+    <style>
+
+          .custom-pop-hover{
+            position: relative;
+          }
+          .custom-pop-temp{
+            position: absolute;
+            left: calc(100% + 10px);
+            top:50%;
+            translate: 0 -50%;
+            background-color: rgb(33, 37, 41);
+            border-radius: 10px;
+            &::before{
+                content: "";
+                position: absolute;
+                border: solid thick rgb(33, 37, 41);
+                left: -4px;
+                z-index: -1;
+                translate: 0 -50%;
+                top: 50%;
+                transform: rotate(45deg);
+            }
+          }
+          .carousel{
+            border: 10px solid rgb(33, 37, 41);
+            border-radius: 10px;
+            & img{
+                max-width: 100px;
+                max-height: 100px;
+            }
+          }
+    </style>
 </head>
 
 <body>
 
-    <section class=" d-flex justify-content-center sticky-top">
+    <section class=" d-flex justify-content-center sticky-top tra">
         <nav
             class="navbar navbar-expand navbar-light bg-white rounded-bottom-4 border border-3 border-top-0 border-secondary ">
             <div class="collapse navbar-collapse" id="collapsibleNavId">
