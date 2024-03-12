@@ -400,8 +400,11 @@ function datainitialization(data){
             data.forEach(function(items,index){
                 display +=`
                 <tr class="custom-pop">
-                    <td class="custom-pop-hover">${items['角色中文名稱']}</td>
-                    ${items['角色編號'][0] == '' ? '' : carousel(items['角色編號'])}
+                    <td  class="custom-pop">
+                        <span  class="custom-pop-hover">${items['角色中文名稱']}
+                        ${items['角色編號'][0] == '' ? '' : carousel(items['角色編號'])}
+                        </span>
+                    </td>
                     <td>${components($('#style').text().split(', '),items['頭銜'])}</td>
                     <td>${components($('#weapon').text().split(', '),items['武器類型'])}</td>
                     <td>
