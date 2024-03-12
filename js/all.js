@@ -376,11 +376,9 @@ function carousel(data){
 }
 
 $("body").on("mouseenter",".custom-pop-hover", function(){
-    console.log("hover in");
     $(this).closest( ".custom-pop").find(".custom-pop-temp").removeClass("d-none");
     $(this).closest( ".custom-pop").find(".carousel").carousel({interval: 1000, pause:false, ride:'carousel'});
    }).on( "mouseleave",".custom-pop-hover", function(){
-    console.log("hover out");
     $(this).closest( ".custom-pop").find(".custom-pop-temp").addClass("d-none");
      $(this).closest( ".custom-pop").find(".carousel").carousel("dispose");
    } );
