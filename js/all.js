@@ -9,6 +9,7 @@ const imgPreloadArr = [];
     const text = await response.text();
     characterData = Papa.parse(text,{header:true,skipEmptyLines:true}).data;
     let personality = '';
+    characterData = characterData.filter(items => items['啟用']=='TRUE');
     characterData.forEach(function(items){
         if(items['個性'] != ''){
             personality +=`${items['個性']},`;
@@ -398,6 +399,9 @@ function datainitialization(data){
             break;
         case 'ctr':
             data.forEach(function(items,index){
+                // if(items['個性'] == ''){
+                //     console.log(items)
+                // }
                 display +=`
                 <tr class="custom-pop">
                     <td  class="custom-pop">
@@ -420,6 +424,9 @@ function datainitialization(data){
             break;
         default :
             data.forEach(function(items,index){
+                // if(items['個性'] == ''){
+                //     console.log(items)
+                // }
                 display +=`
                 <tr>
                     <td  class="custom-pop">
