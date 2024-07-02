@@ -332,11 +332,22 @@ function Comparison(){
         if(items['頭銜'] == "AS" ){
             arr.forEach((a,i) => {
                 if(a['角色中文名稱'] == items['角色中文名稱'] && a['頭銜']=='NS'){
-                    let len = 0;
-                    items['個性'].forEach(b => {
-                        (a['個性'].find(c => c == b) ? len++ : '');
-                    });
-                    if(len == a['個性'].length && a['屬性'][0] == items['屬性'][0]){
+                    // let len = 0;
+                    // items['個性'].forEach(b => {
+                    //     (a['個性'].find(c => c == b) ? len++ : '');
+                    // });
+                    // if(len == a['個性'].length && a['屬性'][0] == items['屬性'][0]){
+                    //     console.log(a['個性'].length,items['個性'].length)
+                    //     characterData[i]['頭銜'].push(items['頭銜'][0]);
+                    //     characterData[i]['角色編號'].push(items['角色編號'][0]);
+                    //     characterData[i]['實裝時間']=items['實裝時間'];
+                    //     characterData[i]['星數']=items['星數'];
+                    //     characterData[i]['特殊條件']=items['特殊條件'];
+                    //     return copy = false;
+                    // }else{
+                    //     return copy = true;
+                    // }
+                    if(items['個性'].length == a['個性'].length && a['屬性'][0] == items['屬性'][0]){
                         characterData[i]['頭銜'].push(items['頭銜'][0]);
                         characterData[i]['角色編號'].push(items['角色編號'][0]);
                         characterData[i]['實裝時間']=items['實裝時間'];
