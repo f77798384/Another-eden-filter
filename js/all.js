@@ -5,7 +5,7 @@ let partyPersonality = [];
 const imgPreloadArr = [];
 //資料載入
 (async function(){
-    const response = await fetch('./data/data.csv?=20240413');
+    const response = await fetch('./data/data.csv?=20240727');
     const text = await response.text();
     characterData = Papa.parse(text,{header:true,skipEmptyLines:true}).data;
     let personality = '';
@@ -320,9 +320,15 @@ function highlight(condition,items,data){
             })
         }
     }
-    if(condition.some(a => items.includes(a))){
-        cla += ` highlight `;
-    }
+    condition.some(a => {
+        if(items==a){
+            cla += ` highlight `;
+        }
+    })
+    // 0727 fix
+    // if(condition.some(a => items.includes(a))){
+    //     cla += ` highlight `;
+    // }
     return `class="${cla}" ${str}`;
 }
 //篩選不重複
