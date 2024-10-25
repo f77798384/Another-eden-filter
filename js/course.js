@@ -10,11 +10,11 @@ $(document).ready(function () {
         dataType: "text",
         success: function (update) {
             let i = 0;
-            arr = update.split('\r')
+            arr = update.toString().replaceAll('\r','').split('\n')
             arr.forEach((item, index) => {
-                if (item.startsWith('\n\t\t')) {
+                if (item.startsWith('\t\t')) {
                     content[i - 1][project].push(item.trim())
-                } else if (item.startsWith('\n\t')) {
+                } else if (item.startsWith('\t')) {
                     project = item.trim()
                     content[i - 1][project] = [];
                 } else {
