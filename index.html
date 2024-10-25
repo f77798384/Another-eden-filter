@@ -30,6 +30,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- CSS Custom -->
     <link rel="stylesheet" href="./stylesheets/all.css?_=20241025">
+    <style>
+        span,td,button,th,a {
+            --min-size: 12;
+            --max-size: 20;
+            --font-size: calc((var(--min-size) * 1px) + (var(--max-size) - var(--min-size)) * ((100cqw - 320px) / (1920 - 320)));
+            font-size: clamp(var(--min-size) * 1px, var(--font-size), var(--max-size) * 1px) !important;
+        }
+    </style>
 </head>
 
 <body>
