@@ -49,7 +49,7 @@ $(document).ready(function () {
                 string = `<tr>${string}</tr>`
                 total += string;
             }
-            $('tbody').html(total)
+            $('.update tbody').html(total)
         }
     });
 });
