@@ -5,7 +5,7 @@ let partyPersonality = [];
 const imgPreloadArr = [];
 //資料載入
 (async function(){
-    const response = await fetch('./data/data.csv?=20240727');
+    const response = await fetch('./data/data.csv?=20241025');
     const text = await response.text();
     characterData = Papa.parse(text,{header:true,skipEmptyLines:true}).data;
     let personality = '';
