@@ -13,3 +13,24 @@ td span{
 .tips{
     border:2px rgba(0, 0, 0) solid;
 }
+
+.star {
+    position: relative;
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-width: 2px;
+        border-style: solid;
+        border-color: transparent;
+        border-radius: 5px;
+        background-image: linear-gradient(to right, #007a97, #4253eb, #d851ff);
+        background-origin: border-box;
+        mask-image: linear-gradient(white, white), linear-gradient(white, white);
+        mask-clip: padding-box, border-box;
+        mask-composite: exclude, add;
+    }
+}

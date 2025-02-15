@@ -18,11 +18,13 @@ const imgPreloadArr = [];
         items['頭銜'] = items['頭銜'].split(',');
         items['屬性'] = items['屬性'].split(',');
         items['天冥'] = items['天冥'].split(',');
+        items['星導'] = items['星導'].split(',');
+        items['搭檔'] = items['搭檔'].split(',');
         items['武器類型'] = items['武器類型'].split(',');
         items['特殊條件'] = items['特殊條件'].split(',');
         items['角色編號'] = items['角色編號'].split(',');
     })
-    originPersonality = Array.from(new Set(personality.split(','))).slice(0, -1);
+    originPersonality = Array.from(new Set(personality.split(','))).slice(0, 0);
     PersonalityList();
     Comparison();
     specondition(characterData)
@@ -388,6 +390,8 @@ function Comparison() {
                         characterData[i]['角色編號'].push(items['角色編號'][0]);
                         characterData[i]['實裝時間'] = items['實裝時間'];
                         characterData[i]['星數'] = items['星數'];
+                        characterData[i]['星導'] = items['星導'];
+                        characterData[i]['搭檔'] = items['搭檔'];
                         characterData[i]['特殊條件'] = items['特殊條件'];
                         return copy = false;
                     } else {
@@ -452,7 +456,7 @@ function datainitialization(data) {
                 display += `
                 <tr class="custom-pop">
                     <td  class="custom-pop">
-                        <span  class="custom-pop-hover">${items['角色中文名稱']}
+                        <span  class="custom-pop-hover${items['星導']=="TRUE" ? ' star' : ''}">${items['角色中文名稱']}
                         ${items['角色編號'][0] == '' ? '' : carousel(items['角色編號'])}
                         </span>
                     </td>
@@ -477,7 +481,7 @@ function datainitialization(data) {
                 display += `
                 <tr>
                     <td  class="custom-pop">
-                        <span  class="custom-pop-hover">${items['角色中文名稱']}
+                        <span  class="custom-pop-hover${items['星導']=="TRUE" ? ' star' : ''}">${items['角色中文名稱']}
                         ${items['角色編號'][0] == '' ? '' : carousel(items['角色編號'])}
                         </span>
                     </td>
@@ -617,7 +621,7 @@ function rtrList(arr, role, index) {
         display += `
         <tr>
             <td  class="custom-pop">
-                <span  class="custom-pop-hover">${items['角色中文名稱']}
+                <span  class="custom-pop-hover${items['星導']=="TRUE" ? ' star' : ''}">${items['角色中文名稱']}
                 ${items['角色編號'][0] == '' ? '' : carousel(items['角色編號'])}
                 </span>
             </td>
@@ -638,6 +642,9 @@ function rtrList(arr, role, index) {
 function specondition(data) {
     data.forEach((items, index) => {
         items['特殊條件'].forEach((a, b) => {
+            // if(typeof(a)=='object'){
+            //     a = Object.keys(a)[b] + a[Object.keys(a)[b]]
+            // }
             let perLen = a.indexOf(':');
             let per = a.substring(0, perLen)
             let content = a.substring(perLen + 1, a.length)
