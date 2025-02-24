@@ -5,7 +5,7 @@ let partyPersonality = [];
 const imgPreloadArr = [];
 //資料載入
 (async function () {
-    const response = await fetch('./data/data.csv?=20241025');
+    const response = await fetch('./data/data.csv?=20250224');
     const text = await response.text();
     characterData = Papa.parse(text, { header: true, skipEmptyLines: true }).data;
     let personality = '';
@@ -24,7 +24,7 @@ const imgPreloadArr = [];
         items['特殊條件'] = items['特殊條件'].split(',');
         items['角色編號'] = items['角色編號'].split(',');
     })
-    originPersonality = Array.from(new Set(personality.split(','))).slice(0, 0);
+    originPersonality = Array.from(new Set(personality.split(','))).slice(0, -1);
     PersonalityList();
     Comparison();
     specondition(characterData)
