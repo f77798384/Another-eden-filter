@@ -24,7 +24,7 @@ const imgPreloadArr = [];
         items['特殊條件'] = items['特殊條件'].split(',');
         items['角色編號'] = items['角色編號'].split(',');
     })
-    originPersonality = Array.from(new Set(personality.split(','))).slice(0, -1);
+    originPersonality = Array.from(new Set(personality.split(','))).slice(0, 0);
     PersonalityList();
     Comparison();
     specondition(characterData)
@@ -518,7 +518,6 @@ function PersonalityList(condition) {
     originPersonality.forEach(items => {
         if ((condition && condition.includes(items)) || condition == undefined) {
             if (active.includes(items)) {
-                console.log(items)
                 arr.unshift(prefix + items);
             } else {
                 arr.push(prefix + items);
