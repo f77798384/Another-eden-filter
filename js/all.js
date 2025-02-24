@@ -79,13 +79,13 @@ $('.modal').on('hidden.bs.modal', function (e) {
     // switch (modaltype) {
     //     case '#style span':
     //         $(this).parentsUntil('tbody').find(modaltype).each((index, item) => {
-    //             console.log(item)
+                console.log(item)
     //             filter_items.push($(item).text())
     //         })
     //         break;
     //         case '#r-style span':
     //         $(this).parentsUntil('tbody').find(modaltype).each((index, item) => {
-    //             console.log(item)
+                console.log(item)
     //             filter_items.push($(item).text())
     //         })
     //         break;
@@ -278,7 +278,7 @@ function render() {
             break;
         case 'ctr':
             renderdata.forEach(a=>{
-                console.log(a)
+                // console.log(a)
                 a['個性'].forEach(b=>{
                     condition.push(b)
                 })
@@ -519,6 +519,12 @@ function PersonalityList(condition) {
             class="btn btn-light border rounded-4 w-100 shadow-sm"
             href="#" role="button">
     `;
+    let actprefix = `
+    <li class="col">
+        <a id="option"
+            class="btn btn-light border rounded-4 w-100 shadow-sm active"
+            href="#" role="button">
+    `;
     let arr = [];
     let display = '';
     let active = [];
@@ -536,9 +542,9 @@ function PersonalityList(condition) {
     // })
     originPersonality.forEach(items => {
         if ((condition && condition.includes(items))) {
-            console.log(items)
+            // console.log(items)
             if (active.includes(items)) {
-                arr.unshift(prefix + items);
+                arr.unshift(actprefix + items);
                 return;
             } else {
                 arr.push(prefix + items);    
@@ -546,8 +552,13 @@ function PersonalityList(condition) {
             }
         } else if (condition == undefined) {
             // console.log(`aaa${items}`)
-            arr.push(prefix + items);
-            return;
+            if (active.includes(items)) {
+                arr.unshift(actprefix + items);
+                return;
+            } else {
+                arr.push(prefix + items);    
+                return;
+            }
         }
     })
     display = arr.join(`
