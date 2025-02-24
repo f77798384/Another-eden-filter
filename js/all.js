@@ -128,7 +128,7 @@ $('.modal-footer #submit').on('click', function (e) {
         span test
         //    (display == '' ? '無篩選條件' : display)
         */
-       (display == '' ? '無篩選條件' : display.join(', '))
+        (display == '' ? '無篩選條件' : display.join(', '))
     );
     $('#personalitySearch').val('');
     if ($(e.target).data('type') == 'personality') {
@@ -247,6 +247,7 @@ $("body").on("mouseenter", ".custom-pop-hover", function () {
 function render() {
     let tab = $('.nav-item .active').attr('id');
     let renderdata = '';
+    let condition = [];
     if ($((tab == 'rtr' ? '#r-weapon' : '#weapon')
     ).text() == '無篩選條件' &&
         $((tab == 'rtr' ? '#r-element' : '#element')
@@ -269,11 +270,20 @@ function render() {
             (tab == 'rtr' ? true : transform($('#personality'), items['個性']))
         ));
     }
+    // console.log(renderdata)
+
     switch (tab) {
         case 'rtr':
             roledataList((renderdata ? renderdata : characterData));
             break;
         case 'ctr':
+            renderdata.forEach(a=>{
+                console.log(a)
+                a['個性'].forEach(b=>{
+                    condition.push(b)
+                })
+            })
+            PersonalityList(condition);
             (renderdata ? datainitialization(renderdata) : datainitialization(characterData));
             break;
         default:
@@ -456,7 +466,7 @@ function datainitialization(data) {
                 display += `
                 <tr class="custom-pop">
                     <td  class="custom-pop">
-                        <span  class="custom-pop-hover${items['星導']=="TRUE" ? ' star' : ''}">${items['角色中文名稱']}
+                        <span  class="custom-pop-hover${items['星導'] == "TRUE" ? ' star' : ''}">${items['角色中文名稱']}
                         ${items['角色編號'][0] == '' ? '' : carousel(items['角色編號'])}
                         </span>
                     </td>
@@ -481,7 +491,7 @@ function datainitialization(data) {
                 display += `
                 <tr>
                     <td  class="custom-pop">
-                        <span  class="custom-pop-hover${items['星導']=="TRUE" ? ' star' : ''}">${items['角色中文名稱']}
+                        <span  class="custom-pop-hover${items['星導'] == "TRUE" ? ' star' : ''}">${items['角色中文名稱']}
                         ${items['角色編號'][0] == '' ? '' : carousel(items['角色編號'])}
                         </span>
                     </td>
@@ -515,13 +525,29 @@ function PersonalityList(condition) {
     $('#personalityModal #option.active').each((index, items) => {
         active.push($(items).html().trim());
     })
+    // originPersonality.forEach(items => {
+    //     if ((condition && condition.includes(items)) || condition == undefined) {
+    //         if (active.includes(items)) {
+    //             arr.unshift(prefix + items);
+    //         } else {
+    //             arr.push(prefix + items);
+    //         }
+    //     }
+    // })
     originPersonality.forEach(items => {
-        if ((condition && condition.includes(items)) || condition == undefined) {
+        if ((condition && condition.includes(items))) {
+            console.log(items)
             if (active.includes(items)) {
                 arr.unshift(prefix + items);
+                return;
             } else {
-                arr.push(prefix + items);
+                arr.push(prefix + items);    
+                return
             }
+        } else if (condition == undefined) {
+            // console.log(`aaa${items}`)
+            arr.push(prefix + items);
+            return;
         }
     })
     display = arr.join(`
@@ -621,7 +647,7 @@ function rtrList(arr, role, index) {
         display += `
         <tr>
             <td  class="custom-pop">
-                <span  class="custom-pop-hover${items['星導']=="TRUE" ? ' star' : ''}">${items['角色中文名稱']}
+                <span  class="custom-pop-hover${items['星導'] == "TRUE" ? ' star' : ''}">${items['角色中文名稱']}
                 ${items['角色編號'][0] == '' ? '' : carousel(items['角色編號'])}
                 </span>
             </td>
