@@ -6,7 +6,7 @@ let project = ''
 
 $(document).ready(function () {
     $.ajax({
-        url: "./data/course.txt",
+        url: "./data/course.txt?=20250320",
         dataType: "text",
         success: function (update) {
             let i = 0;
