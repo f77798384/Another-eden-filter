@@ -277,13 +277,18 @@ function render() {
             roledataList((renderdata ? renderdata : characterData));
             break;
         case 'ctr':
-            renderdata.forEach(a=>{
-                // console.log(a)
-                a['個性'].forEach(b=>{
-                    condition.push(b)
+            console.log(renderdata)
+            try {
+                renderdata.forEach(a=>{
+                    // console.log(a)
+                    a['個性'].forEach(b=>{
+                        condition.push(b)
+                    })
                 })
-            })
-            PersonalityList(condition);
+                PersonalityList(condition);
+            } catch (error) {
+                
+            }
             (renderdata ? datainitialization(renderdata) : datainitialization(characterData));
             break;
         default:
