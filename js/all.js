@@ -666,6 +666,7 @@ function rtrList(arr, role, index) {
     renderdata.sort((a, b) => b['sort'] - a['sort']);
 
     renderdata.forEach(function (items, index) {
+        //<td>${components(['none'], items['頭銜'])}</td>
         display += `
         <tr>
             <td  class="custom-pop">
@@ -673,7 +674,7 @@ function rtrList(arr, role, index) {
                 ${items['角色編號'][0] == '' ? '' : carousel(items['角色編號'])}
                 </span>
             </td>
-            <td>${components(['none'], items['頭銜'])}</td>
+            <td>${components($('#style').text().split(', '), items['頭銜'], '', items['星導'])}</td>
             <td>${components(role['武器類型'], items['武器類型'])}</td>
             <td>
                 ${components(role['屬性'], items['屬性'])}
