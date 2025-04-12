@@ -382,9 +382,10 @@ function highlight(condition, items, data) {
 function Comparison() {
     let copy = true;
     characterData = characterData.filter((items, index, arr) => {
-        if (items['頭銜'] == "AS") {
+        if (items['頭銜'] == "AS" || items['頭銜'] == "ES") {
+            
             arr.forEach((a, i) => {
-                if (a['角色中文名稱'] == items['角色中文名稱'] && a['頭銜'] == 'NS') {
+                if (a['角色中文名稱'] == items['角色中文名稱'] && (a['頭銜'] == 'NS' || a['頭銜'][0] == 'NS')) {
                     // let len = 0;
                     // items['個性'].forEach(b => {
                     //     (a['個性'].find(c => c == b) ? len++ : '');
