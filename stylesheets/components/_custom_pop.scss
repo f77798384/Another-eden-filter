@@ -1,30 +1,35 @@
-.custom-pop-hover{
+.custom-pop-hover {
     position: relative;
     cursor: default;
-  }
-.custom-pop-temp{
-position: absolute;
-left: calc(100% + 10px);
-top:50%;
-translate: 0 -50%;
-background-color: rgb(33, 37, 41);
-border-radius: 10px;
-&::before{
-    content: "";
+}
+
+.custom-pop-temp {
+    z-index: 1;
     position: absolute;
-    border: solid thick rgb(33, 37, 41);
-    left: -4px;
-    z-index: -1;
-    translate: 0 -50%;
+    left: calc(100% + 10px);
     top: 50%;
-    transform: rotate(45deg);
+    translate: 0 -50%;
+    background-color: rgb(33, 37, 41);
+    border-radius: 10px;
+
+    &::before {
+        content: "";
+        position: absolute;
+        border: solid thick rgb(33, 37, 41);
+        left: -4px;
+        z-index: -1;
+        translate: 0 -50%;
+        top: 50%;
+        transform: rotate(45deg);
+    }
 }
-}
-.carousel{
-border: 10px solid rgb(33, 37, 41);
-border-radius: 10px;
-& img{
-    max-width: 100px;
-    max-height: 100px;
-}
+
+.carousel {
+    border: 10px solid rgb(33, 37, 41);
+    border-radius: 10px;
+
+    & img {
+        max-width: 100px;
+        max-height: 100px;
+    }
 }

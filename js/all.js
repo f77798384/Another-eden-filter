@@ -5,7 +5,7 @@ let partyPersonality = [];
 const imgPreloadArr = [];
 //資料載入
 (async function () {
-    const response = await fetch('./data/data.csv?=20250320');
+    const response = await fetch('./data/data.csv?=20250412');
     const text = await response.text();
     characterData = Papa.parse(text, { header: true, skipEmptyLines: true }).data;
     let personality = '';
@@ -18,7 +18,10 @@ const imgPreloadArr = [];
         items['頭銜'] = items['頭銜'].split(',');
         items['屬性'] = items['屬性'].split(',');
         items['天冥'] = items['天冥'].split(',');
-        items['星導'] = items['星導'].split(',');
+        // items['星導'] = items['星導'].split(',');
+        let a = items['星導'];
+        items['星導'] = {}
+        items['星導'][`${items['頭銜']}`] = a;
         items['搭檔'] = items['搭檔'].split(',');
         items['武器類型'] = items['武器類型'].split(',');
         items['特殊條件'] = items['特殊條件'].split(',');
@@ -277,17 +280,16 @@ function render() {
             roledataList((renderdata ? renderdata : characterData));
             break;
         case 'ctr':
-            console.log(renderdata)
             try {
-                renderdata.forEach(a=>{
+                renderdata.forEach(a => {
                     // console.log(a)
-                    a['個性'].forEach(b=>{
+                    a['個性'].forEach(b => {
                         condition.push(b)
                     })
                 })
                 PersonalityList(condition);
             } catch (error) {
-                
+
             }
             (renderdata ? datainitialization(renderdata) : datainitialization(characterData));
             break;
@@ -306,7 +308,7 @@ function transform(condition, data) {
     }
 }
 //components
-function components(condition, select, data) {
+function components(condition, select, data, star) {
     let tab = $('.nav-item .active').attr('id');
     let content = '';
     if (select != '') {
@@ -316,13 +318,13 @@ function components(condition, select, data) {
                     if ($('#r-Ptype').hasClass('active')) {
                         if (partyPersonality.includes(items)) {
                             content += `
-                            <span ${highlight(condition, items, data)}>${items}</span>
+                            <span ${highlight(condition, items, data, star)}>${items}</span>
                             `;
                             return
                         }
                     } else {
                         content += `
-                        <span ${highlight(condition, items, data)}>${items}</span>
+                        <span ${highlight(condition, items, data, star)}>${items}</span>
                         `;
                         return
                     }
@@ -331,20 +333,20 @@ function components(condition, select, data) {
                     if ($('#Ptype').hasClass('active')) {
                         if (partyPersonality.includes(items)) {
                             content += `
-                            <span ${highlight(condition, items, data)}>${items}</span>
+                            <span ${highlight(condition, items, data, star)}>${items}</span>
                             `;
                             return;
                         }
                     } else {
                         content += `
-                        <span ${highlight(condition, items, data)}>${items}</span>
+                        <span ${highlight(condition, items, data, star)}>${items}</span>
                         `;
                         return;
                     }
                     break;
                 default:
                     content += `
-                        <span ${highlight(condition, items, data)}>${items}</span>
+                        <span ${highlight(condition, items, data, star)}>${items}</span>
                         `;
                     break;
             }
@@ -353,7 +355,7 @@ function components(condition, select, data) {
     return content;
 }
 //highlight
-function highlight(condition, items, data) {
+function highlight(condition, items, data, star) {
     let str = '';
     let cla = '';
     if (data) {
@@ -371,6 +373,9 @@ function highlight(condition, items, data) {
         if (items == a) {
             cla += ` highlight `;
         }
+        if (star) {
+            star[items] == "TRUE" ? cla += ` star ` : ''
+        }
     })
     // 0727 fix
     // if(condition.some(a => items.includes(a))){
@@ -383,7 +388,7 @@ function Comparison() {
     let copy = true;
     characterData = characterData.filter((items, index, arr) => {
         if (items['頭銜'] == "AS" || items['頭銜'] == "ES") {
-            
+
             arr.forEach((a, i) => {
                 if (a['角色中文名稱'] == items['角色中文名稱'] && (a['頭銜'] == 'NS' || a['頭銜'][0] == 'NS')) {
                     // let len = 0;
@@ -406,7 +411,7 @@ function Comparison() {
                         characterData[i]['角色編號'].push(items['角色編號'][0]);
                         characterData[i]['實裝時間'] = items['實裝時間'];
                         characterData[i]['星數'] = items['星數'];
-                        characterData[i]['星導'] = items['星導'];
+                        characterData[i]['星導'][`${Object.keys(items['星導'])[0]}`] = items['星導'][`${Object.keys(items['星導'])[0]}`]
                         characterData[i]['搭檔'] = items['搭檔'];
                         characterData[i]['特殊條件'] = items['特殊條件'];
                         return copy = false;
@@ -476,7 +481,7 @@ function datainitialization(data) {
                         ${items['角色編號'][0] == '' ? '' : carousel(items['角色編號'])}
                         </span>
                     </td>
-                    <td>${components($('#style').text().split(', '), items['頭銜'])}</td>
+                    <td>${components($('#style').text().split(', '), items['頭銜'], '', items['星導'])}</td>
                     <td>${components($('#weapon').text().split(', '), items['武器類型'])}</td>
                     <td>
                         ${components($('#element').text().split(', '), items['屬性'])}
@@ -501,7 +506,7 @@ function datainitialization(data) {
                         ${items['角色編號'][0] == '' ? '' : carousel(items['角色編號'])}
                         </span>
                     </td>
-                    <td>${components($('#style').text().split(', '), items['頭銜'])}</td>
+                    <td>${components($('#style').text().split(', '), items['頭銜'], '', items['星導'])}</td>
                     <td>${components($('#weapon').text().split(', '), items['武器類型'])}</td>
                     <td>
                         ${components($('#element').text().split(', '), items['屬性'])}
@@ -553,7 +558,7 @@ function PersonalityList(condition) {
                 arr.unshift(actprefix + items);
                 return;
             } else {
-                arr.push(prefix + items);    
+                arr.push(prefix + items);
                 return
             }
         } else if (condition == undefined) {
@@ -562,7 +567,7 @@ function PersonalityList(condition) {
                 arr.unshift(actprefix + items);
                 return;
             } else {
-                arr.push(prefix + items);    
+                arr.push(prefix + items);
                 return;
             }
         }
@@ -703,3 +708,8 @@ function tooltipOn() {
         return new bootstrap.Tooltip(tooltipTriggerEl)
     });
 }
+
+function getstar(type, star) {
+    return star[type] == "TRUE" ? 'star' : ''
+}
+// star(characterData[0]['頭銜'][0],characterData[0]['星導'])

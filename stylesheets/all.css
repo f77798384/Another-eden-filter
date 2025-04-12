@@ -13042,6 +13042,7 @@ td span {
 }
 
 .custom-pop-temp {
+  z-index: 1;
   position: absolute;
   left: calc(100% + 10px);
   top: 50%;
